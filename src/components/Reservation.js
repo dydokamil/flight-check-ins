@@ -18,6 +18,9 @@ class Reservation extends React.Component {
   }
 
   render() {
+    const { seats, reservedSeat, basePrice, checkInFee } = this.props
+    console.log(seats)
+    console.log(reservedSeat)
     return (
       <Container>
         <Navbar />
@@ -26,7 +29,12 @@ class Reservation extends React.Component {
           <h2>You have not made any reservations.</h2>
         ) : (
           <div>
-            <div>Your seat: {this.props.reservedSeat}</div>
+            <div>Your seat: {reservedSeat}</div>
+            <div>
+              Price: ${basePrice +
+                seats.find(seat => seat.id === reservedSeat).fee +
+                checkInFee}
+            </div>
             <Button onClick={this.cancelReservation} color="danger">
               Cancel Reservation
             </Button>
@@ -39,7 +47,10 @@ class Reservation extends React.Component {
 
 const mapStateToProps = state => ({
   madeReservation: state.seatsReducer.madeReservation,
-  reservedSeat: state.seatsReducer.reservedSeat
+  reservedSeat: state.seatsReducer.reservedSeat,
+  seats: state.seatsReducer.seats,
+  basePrice: state.seatsReducer.basePrice,
+  checkInFee: state.seatsReducer.checkInFee
 })
 
 const mapDispatchToProps = dispatch => ({
