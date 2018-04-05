@@ -4,9 +4,9 @@ import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
 import { Container, Row, Col } from 'reactstrap'
 
 import Seat from './Seat'
+import Navbar from './Navbar'
 
 export const convertTo2D = seats => {
-  console.log(seats)
   let rows = []
   for (let i = 0; i < seats.length / 6; i++) {
     let leftSide = []
@@ -31,7 +31,8 @@ class Seats extends React.Component {
     const { seats } = this.props
     const converted = convertTo2D(seats)
     return (
-      <div>
+      <Container>
+        <Navbar />
         <h1>Seats</h1>
         {seats &&
           converted.map((seatRow, rowIdx) => {
@@ -59,7 +60,7 @@ class Seats extends React.Component {
             <Button color="primary">Random Seat</Button>
           </Col>
         </Row>
-      </div>
+      </Container>
     )
   }
 }

@@ -10,7 +10,8 @@ const INITIAL_STATE = {
   seats: seatsFlat,
   basePrice: 50,
   checkInFee: 10,
-  madeReservation: false
+  madeReservation: false,
+  reservedSeat: null
 }
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
@@ -29,7 +30,9 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
             {},
             {
               ...reservedSeat,
-              available: false,
+              available: reservedSeat.reservedUntil
+                ? reservedSeat.reservedUntil.isBefore(moment.utc())
+                : false,
               paid: false,
               reservedUntil: moment.utc().add(3, 'minutes')
             }
@@ -62,7 +65,6 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
       }
 
     default:
-      console.log(state)
       return state
   }
 }
