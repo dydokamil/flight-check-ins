@@ -53,7 +53,6 @@ class Seats extends React.Component {
                     return (
                       <Col key={seat.id} lg={1} xs={1}>
                         <Seat
-                          // madeReservation={this.props.madeReservation}
                           checkInFee={this.props.checkInFee}
                           basePrice={this.props.basePrice}
                           seat={seat}
@@ -89,11 +88,17 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onBookSeat: seatId =>
+  onBookSeat: seatId => {
+    // refetch seats after 3 minutes
+    setTimeout(
+      () => dispatch({ type: actions.GET_SEATS, payload: {} }),
+      1000 * 60 * 3 + 5000
+    )
     dispatch({
       type: actions.MAKE_RESERVATION,
       payload: { id: seatId }
     })
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Seats)

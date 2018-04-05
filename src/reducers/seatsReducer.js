@@ -16,6 +16,9 @@ const INITIAL_STATE = {
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actions.GET_SEATS:
+      return state
+
     case actions.MAKE_RESERVATION:
       const reserved = action.payload.id
       const reservedSeat = state.seats.find(seat => seat.id === reserved)
