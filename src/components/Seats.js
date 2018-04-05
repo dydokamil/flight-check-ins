@@ -5,6 +5,7 @@ import { Container, Row, Col } from 'reactstrap'
 
 import Seat from './Seat'
 import Navbar from './Navbar'
+import * as actions from '../actions'
 
 export const convertTo2D = seats => {
   let rows = []
@@ -25,6 +26,15 @@ class Seats extends React.Component {
     this.setState({
       popoverOpen: !this.state.popoverOpen
     })
+  }
+
+  bookRandomSeat = () => {
+    const availableSeats = this.props.seats.filter(seat => seat.available)
+    const seatIdList = availableSeats.map(seat => seat.id)
+
+    const randomSeat = seatIdList[Math.floor(Math.random() * seatIdList.length)]
+
+    this.props.onBookSeat(randomSeat)
   }
 
   render() {
@@ -57,7 +67,13 @@ class Seats extends React.Component {
           })}
         <Row>
           <Col style={{ marginTop: '1rem' }}>
-            <Button color="primary">Random Seat</Button>
+            <Button
+              disabled={this.props.madeReservation}
+              onClick={this.bookRandomSeat}
+              color="primary"
+            >
+              Random Seat
+            </Button>
           </Col>
         </Row>
       </Container>
@@ -72,4 +88,12 @@ const mapStateToProps = state => ({
   madeReservation: state.seatsReducer.madeReservation
 })
 
-export default connect(mapStateToProps)(Seats)
+const mapDispatchToProps = dispatch => ({
+  onBookSeat: seatId =>
+    dispatch({
+      type: actions.MAKE_RESERVATION,
+      payload: { id: seatId }
+    })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Seats)
