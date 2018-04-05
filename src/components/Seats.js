@@ -96,7 +96,7 @@ const mapDispatchToProps = dispatch => ({
     )
     dispatch({
       type: actions.MAKE_RESERVATION,
-      payload: { id: seatId }
+      payload: { id: seatId, randomly: true }
     })
   }
 })

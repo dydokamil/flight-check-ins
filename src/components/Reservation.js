@@ -18,9 +18,13 @@ class Reservation extends React.Component {
   }
 
   render() {
-    const { seats, reservedSeat, basePrice, checkInFee } = this.props
-    console.log(seats)
-    console.log(reservedSeat)
+    const { seats, reservedSeat, basePrice, checkInFee, randomly } = this.props
+
+    const seatFee =
+      reservedSeat && seats.find(seat => seat.id === reservedSeat).fee
+
+    const randomFee = randomly ? 0 : checkInFee
+
     return (
       <Container>
         <Navbar />
@@ -30,11 +34,7 @@ class Reservation extends React.Component {
         ) : (
           <div>
             <div>Your seat: {reservedSeat}</div>
-            <div>
-              Price: ${basePrice +
-                seats.find(seat => seat.id === reservedSeat).fee +
-                checkInFee}
-            </div>
+            <div>Price: ${basePrice + seatFee + randomFee}</div>
             <Button onClick={this.cancelReservation} color="danger">
               Cancel Reservation
             </Button>
@@ -50,7 +50,8 @@ const mapStateToProps = state => ({
   reservedSeat: state.seatsReducer.reservedSeat,
   seats: state.seatsReducer.seats,
   basePrice: state.seatsReducer.basePrice,
-  checkInFee: state.seatsReducer.checkInFee
+  checkInFee: state.seatsReducer.checkInFee,
+  randomly: state.seatsReducer.randomly
 })
 
 const mapDispatchToProps = dispatch => ({

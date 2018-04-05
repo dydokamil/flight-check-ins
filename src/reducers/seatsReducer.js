@@ -21,12 +21,14 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
 
     case actions.MAKE_RESERVATION:
       const reserved = action.payload.id
+      const randomly = action.payload.randomly
       const reservedSeat = state.seats.find(seat => seat.id === reserved)
 
       return {
         ...state,
         madeReservation: true,
         reservedSeat: reserved,
+        randomly,
         seats: [
           ...state.seats.slice(0, reserved - 1),
           Object.assign(
