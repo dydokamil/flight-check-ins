@@ -1,10 +1,68 @@
-import seatsData from '../seats.json'
+// import _ from'lodash'
+import moment from 'moment'
 
-const INITIAL_STATE = { seats: seatsData, basePrice: 50 }
+// import seatsData from '../seats.json'
+import seatsFlat from '../seatsFlat.json'
+import * as actions from '../actions'
+
+const INITIAL_STATE = {
+  // seats: seatsData,
+  seats: seatsFlat,
+  basePrice: 50,
+  checkInFee: 10,
+  madeReservation: false
+}
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actions.MAKE_RESERVATION:
+      const reserved = action.payload.id
+      const reservedSeat = state.seats.find(seat => seat.id === reserved)
+
+      return {
+        ...state,
+        madeReservation: true,
+        reservedSeat: reserved,
+        seats: [
+          ...state.seats.slice(0, reserved - 1),
+          Object.assign(
+            {},
+            {
+              ...reservedSeat,
+              available: false,
+              paid: false,
+              reservedUntil: moment.utc().add(3, 'minutes')
+            }
+          ),
+          ...state.seats.slice(reserved)
+        ]
+      }
+
+    case actions.CANCEL_RESERVATION:
+      const cancelSeatId = action.payload.id
+      const cancelSeat = state.seats.find(seat => seat.id === cancelSeatId)
+
+      return {
+        ...state,
+        madeReservation: false,
+        reservedSeat: null,
+        seats: [
+          ...state.seats.slice(0, cancelSeatId - 1),
+          Object.assign(
+            {},
+            {
+              ...cancelSeat,
+              available: true,
+              paid: false,
+              reservedUntil: null
+            }
+          ),
+          ...state.seats.slice(cancelSeatId)
+        ]
+      }
+
     default:
+      console.log(state)
       return state
   }
 }

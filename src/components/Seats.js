@@ -5,6 +5,21 @@ import { Container, Row, Col } from 'reactstrap'
 
 import Seat from './Seat'
 
+export const convertTo2D = seats => {
+  console.log(seats)
+  let rows = []
+  for (let i = 0; i < seats.length / 6; i++) {
+    let leftSide = []
+    let rightSide = []
+
+    const row = seats.slice(i * 6, i * 6 + 6)
+    leftSide = row.slice(0, 3)
+    rightSide = row.slice(3, 6)
+    rows.push([leftSide, rightSide])
+  }
+  return rows
+}
+
 class Seats extends React.Component {
   toggle = () => {
     this.setState({
@@ -14,18 +29,24 @@ class Seats extends React.Component {
 
   render() {
     const { seats } = this.props
+    const converted = convertTo2D(seats)
     return (
       <div>
         <h1>Seats</h1>
         {seats &&
-          seats.map((seatRow, rowIdx) => {
+          converted.map((seatRow, rowIdx) => {
             return (
               <Row key={rowIdx}>
                 {seatRow.map((seatsSide, idx) => {
                   return seatsSide.map(seat => {
                     return (
                       <Col key={seat.id} lg={1} xs={1}>
-                        <Seat basePrice={this.props.basePrice} seat={seat} />
+                        <Seat
+                          // madeReservation={this.props.madeReservation}
+                          checkInFee={this.props.checkInFee}
+                          basePrice={this.props.basePrice}
+                          seat={seat}
+                        />
                       </Col>
                     )
                   })
@@ -45,7 +66,9 @@ class Seats extends React.Component {
 
 const mapStateToProps = state => ({
   seats: state.seatsReducer.seats,
-  basePrice: state.seatsReducer.basePrice
+  basePrice: state.seatsReducer.basePrice,
+  checkInFee: state.seatsReducer.checkInFee,
+  madeReservation: state.seatsReducer.madeReservation
 })
 
 export default connect(mapStateToProps)(Seats)

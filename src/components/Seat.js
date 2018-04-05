@@ -1,20 +1,39 @@
 import React from 'react'
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
+import { connect } from 'react-redux'
+
+import * as actions from '../actions'
 
 class Seat extends React.Component {
   state = {
-    popoverOpen: false
+    popoverOpen: false,
+    id: this.props.seat.id,
+    canBook: true
+  }
+
+  componentDidMount = () => {
+    this.setState({ canBook: !this.props.madeReservation })
   }
 
   toggle = () => {
     this.setState({ popoverOpen: !this.state.popoverOpen })
   }
 
+  bookSeat = () => {
+    this.props.onBookSeat(this.state.id)
+    this.setState({ canBook: false })
+  }
+
   render() {
     const { seat } = this.props
+
     return (
       <React.Fragment>
-        <Button onClick={this.toggle} id={`Popover${seat.id}`}>
+        <Button
+          onClick={this.toggle}
+          id={`Popover${seat.id}`}
+          disabled={!seat.available}
+        >
           {seat.id}
         </Button>
         <Popover
@@ -27,11 +46,19 @@ class Seat extends React.Component {
           <PopoverBody>
             <div>
               <h5>
-                Price: ${this.props.basePrice} + ${seat.fee}
+                Price: ${this.props.basePrice} + ${seat.fee +
+                  this.props.checkInFee}
               </h5>
+              <small>Fees included.</small>
             </div>
             <div>
-              <Button color="success">Book</Button>
+              <Button
+                disabled={this.props.madeReservation}
+                onClick={this.bookSeat}
+                color="success"
+              >
+                Book
+              </Button>
             </div>
           </PopoverBody>
         </Popover>
@@ -40,4 +67,16 @@ class Seat extends React.Component {
   }
 }
 
-export default Seat
+const mapDispatchToProps = dispatch => ({
+  onBookSeat: seatId =>
+    dispatch({
+      type: actions.MAKE_RESERVATION,
+      payload: { id: seatId }
+    })
+})
+
+const mapStateToProps = state => ({
+  madeReservation: state.seatsReducer.madeReservation
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Seat)
