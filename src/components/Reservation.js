@@ -3,7 +3,6 @@ import { Container } from "reactstrap"
 import { connect } from "react-redux"
 import { Button } from "reactstrap"
 
-import Navbar from "./Navbar"
 import * as actions from "../actions"
 
 class Reservation extends React.Component {
@@ -27,7 +26,6 @@ class Reservation extends React.Component {
 
     return (
       <Container>
-        <Navbar />
         <h1>Reservation</h1>
         {!this.props.madeReservation ? (
           <h2>You have not made any reservations.</h2>

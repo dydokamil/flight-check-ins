@@ -6,7 +6,6 @@ export const MAKE_RESERVATION = "MAKE_RESERVATION"
 export const CANCEL_RESERVATION = "CANCEL_RESERVATION"
 
 // fetch seats>
-// export const FETCH_SEATS = "FETCH_SEATS"
 export const FETCH_SEATS_SUCCESS = "FETCH_SEATS_SUCCESS"
 export const FETCH_SEATS_FAILURE = "FETCH_SEATS_FAILURE"
 
@@ -29,3 +28,32 @@ export function fetchSeats() {
   }
 }
 // <fetch seats
+
+// sign up>
+export const SIGN_UP = "SIGN_UP"
+export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS"
+export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE"
+
+export const signUpFailure = err => ({
+  type: SIGN_UP_FAILURE,
+  payload: err,
+})
+
+export const signUpSuccess = payload => ({
+  type: SIGN_UP_SUCCESS,
+  payload,
+})
+
+export function signUp(payload) {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/users`, payload)
+      .then(res => {
+        dispatch(signUpSuccess({ ...payload }))
+      })
+      .catch(err => {
+        dispatch(signUpFailure(err.response.data.error))
+      })
+  }
+}
+// <sign up

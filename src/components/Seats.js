@@ -4,7 +4,6 @@ import { Button } from "reactstrap"
 import { Container, Row, Col } from "reactstrap"
 
 import Seat from "./Seat"
-import Navbar from "./Navbar"
 import "./Seats.css"
 import * as actions from "../actions"
 
@@ -50,7 +49,6 @@ class Seats extends React.Component {
     const converted = convertTo2D(seats)
     return (
       <Container>
-        <Navbar />
         <h1>Seats</h1>
         {seats &&
           converted.map((seatRow, rowIdx) => (
