@@ -1,23 +1,25 @@
 // import _ from'lodash'
-import moment from 'moment'
+import moment from "moment"
 
-// import seatsData from '../seats.json'
-import seatsFlat from '../seatsFlat.json'
-import * as actions from '../actions'
+import * as actions from "../actions"
 
 const INITIAL_STATE = {
   // seats: seatsData,
-  seats: seatsFlat,
+  seats: null,
   basePrice: 50,
   checkInFee: 10,
-  madeReservation: false,
-  reservedSeat: null
+  reservedSeat: null,
 }
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actions.GET_SEATS:
-      return state
+    case actions.FETCH_SEATS_SUCCESS:
+      const seats = action.payload
+
+      return { ...state, seats, error: null }
+
+    case actions.FETCH_SEATS_FAILURE:
+      return { ...state, error: action.payload }
 
     case actions.MAKE_RESERVATION:
       const reserved = action.payload.id
@@ -39,11 +41,11 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
                 ? reservedSeat.reservedUntil.isBefore(moment.utc())
                 : false,
               paid: false,
-              reservedUntil: moment.utc().add(3, 'minutes')
-            }
+              reservedUntil: moment.utc().add(3, "minutes"),
+            },
           ),
-          ...state.seats.slice(reserved)
-        ]
+          ...state.seats.slice(reserved),
+        ],
       }
 
     case actions.CANCEL_RESERVATION:
@@ -52,7 +54,6 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
 
       return {
         ...state,
-        madeReservation: false,
         reservedSeat: null,
         seats: [
           ...state.seats.slice(0, cancelSeatId - 1),
@@ -62,11 +63,11 @@ const seatsReducer = (state = INITIAL_STATE, action) => {
               ...cancelSeat,
               available: true,
               paid: false,
-              reservedUntil: null
-            }
+              reservedUntil: null,
+            },
           ),
-          ...state.seats.slice(cancelSeatId)
-        ]
+          ...state.seats.slice(cancelSeatId),
+        ],
       }
 
     default:

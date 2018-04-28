@@ -1,10 +1,10 @@
-import React from 'react'
-import { Container, Row, Col } from 'reactstrap'
-import { connect } from 'react-redux'
-import { Button } from 'reactstrap'
+import React from "react"
+import { Container } from "reactstrap"
+import { connect } from "react-redux"
+import { Button } from "reactstrap"
 
-import Navbar from './Navbar'
-import * as actions from '../actions'
+import Navbar from "./Navbar"
+import * as actions from "../actions"
 
 class Reservation extends React.Component {
   state = { seatId: null }
@@ -51,15 +51,15 @@ const mapStateToProps = state => ({
   seats: state.seatsReducer.seats,
   basePrice: state.seatsReducer.basePrice,
   checkInFee: state.seatsReducer.checkInFee,
-  randomly: state.seatsReducer.randomly
+  randomly: state.seatsReducer.randomly,
 })
 
 const mapDispatchToProps = dispatch => ({
   onCancelReservation: seatId =>
     dispatch({
       type: actions.CANCEL_RESERVATION,
-      payload: { id: seatId }
-    })
+      payload: { id: seatId },
+    }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reservation)

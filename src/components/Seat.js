@@ -1,14 +1,15 @@
-import React from 'react'
-import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
-import { connect } from 'react-redux'
+import React from "react"
+import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap"
+import { connect } from "react-redux"
 
-import * as actions from '../actions'
+import * as actions from "../actions"
+import "./Seat.css"
 
 class Seat extends React.Component {
   state = {
     popoverOpen: false,
     id: this.props.seat.id,
-    canBook: true
+    canBook: true,
   }
 
   componentDidMount = () => {
@@ -30,6 +31,7 @@ class Seat extends React.Component {
     return (
       <React.Fragment>
         <Button
+          className="seat"
           onClick={this.toggle}
           id={`Popover${seat.id}`}
           disabled={!seat.available}
@@ -70,19 +72,19 @@ class Seat extends React.Component {
 const mapDispatchToProps = dispatch => ({
   onBookSeat: seatId => {
     // refetch seats after 3 minutes
-    setTimeout(
-      () => dispatch({ type: actions.GET_SEATS, payload: {} }),
-      1000 * 60 * 3 + 5000
-    )
+    // setTimeout(
+    //   dispatch({ type: actions.FETCH_SEATS, payload: {} }),
+    //   1000 * 60 * 3 + 5000,
+    // );
     dispatch({
       type: actions.MAKE_RESERVATION,
-      payload: { id: seatId }
+      payload: { id: seatId },
     })
-  }
+  },
 })
 
 const mapStateToProps = state => ({
-  madeReservation: state.seatsReducer.madeReservation
+  madeReservation: state.seatsReducer.madeReservation,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Seat)
