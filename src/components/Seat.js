@@ -48,8 +48,9 @@ class Seat extends React.Component {
           <PopoverBody>
             <div>
               <h5>
-                Price: ${this.props.basePrice} + ${seat.fee +
-                  this.props.checkInFee}
+                Price: ${this.props.basePrice + seat.fee} + ${
+                  +this.props.checkInFee
+                }
               </h5>
               <small>Fees included.</small>
             </div>

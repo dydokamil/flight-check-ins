@@ -6,17 +6,17 @@ import * as actions from "../actions"
 const INITIAL_STATE = {
   // seats: seatsData,
   seats: null,
-  basePrice: 50,
-  checkInFee: 10,
+  basePrice: null,
+  checkInFee: null,
   reservedSeat: null,
 }
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actions.FETCH_SEATS_SUCCESS:
-      const seats = action.payload
+      const { seats } = action.payload
 
-      return { ...state, seats, error: null }
+      return { ...state, ...action.payload, error: null }
 
     case actions.FETCH_SEATS_FAILURE:
       return { ...state, error: action.payload }

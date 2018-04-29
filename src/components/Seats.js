@@ -42,6 +42,9 @@ class Seats extends React.Component {
   }
 
   render() {
+    if (this.props.error) {
+      return <div>{this.props.error}</div>
+    }
     const { seats } = this.props
     if (!seats) {
       return <div>Loading...</div>
@@ -94,6 +97,7 @@ const mapStateToProps = state => ({
   basePrice: state.seatsReducer.basePrice,
   checkInFee: state.seatsReducer.checkInFee,
   madeReservation: state.seatsReducer.madeReservation,
+  error: state.seatsReducer.error,
 })
 
 const mapDispatchToProps = dispatch => ({
