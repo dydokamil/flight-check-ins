@@ -2,7 +2,6 @@ import axios from "axios"
 
 export const ROOT_URL = "http://localhost:4000"
 
-export const MAKE_RESERVATION = "MAKE_RESERVATION"
 export const CANCEL_RESERVATION = "CANCEL_RESERVATION"
 
 // fetch seats>
@@ -78,17 +77,42 @@ export function logIn(payload) {
     axios
       .post(`${ROOT_URL}/users/login`, payload)
       .then(res => {
-        dispatch(signUpSuccess(res.data))
+        dispatch(logInSuccess(res.data))
       })
       .catch(err => {
-        dispatch(signUpFailure(err.response.data.error))
+        dispatch(logInFailure(err.response.data.error))
       })
   }
 }
-// <log in
+// log out>
 export const LOG_OUT = "LOG_OUT"
 
 export const logOut = () => ({
   type: LOG_OUT,
 })
 // <log out
+
+// make reservation>
+export const MAKE_RESERVATION = "MAKE_RESERVATION"
+export const MAKE_RESERVATION_SUCCESS = "MAKE_RESERVATION_SUCCESS"
+export const MAKE_RESERVATION_FAILURE = "MAKE_RESERVATION_FAILURE"
+
+export function makeReservation(payload) {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/reservations`, payload)
+      .then(res => dispatch(makeReservationSuccess(res.data)))
+      .catch(err => dispatch(makeReservationFailure(err.response.data.error)))
+  }
+}
+
+export const makeReservationSuccess = payload => ({
+  type: MAKE_RESERVATION_SUCCESS,
+  payload,
+})
+
+export const makeReservationFailure = err => ({
+  type: MAKE_RESERVATION_FAILURE,
+  payload: err,
+})
+// <make reservation

@@ -9,7 +9,6 @@ class Seat extends React.Component {
   state = {
     popoverOpen: false,
     id: this.props.seat.id,
-    canBook: true,
   }
 
   componentDidMount = () => {
@@ -21,8 +20,9 @@ class Seat extends React.Component {
   }
 
   bookSeat = () => {
-    this.props.onBookSeat(this.state.id)
-    this.setState({ canBook: false })
+    const payload = { token: this.props.token, seat: this.state.id }
+
+    this.props.onBookSeat(payload)
   }
 
   render() {
@@ -55,7 +55,8 @@ class Seat extends React.Component {
             </div>
             <div>
               <Button
-                disabled={this.props.madeReservation}
+                // disabled={this.props.madeReservation}
+                disabled={!this.props.token}
                 onClick={this.bookSeat}
                 color="success"
               >
@@ -70,21 +71,20 @@ class Seat extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  onBookSeat: seatId => {
+  onBookSeat: payload => {
     // refetch seats after 3 minutes
     // setTimeout(
     //   dispatch({ type: actions.FETCH_SEATS, payload: {} }),
     //   1000 * 60 * 3 + 5000,
     // );
-    dispatch({
-      type: actions.MAKE_RESERVATION,
-      payload: { id: seatId },
-    })
+    dispatch(actions.makeReservation(payload))
   },
 })
 
 const mapStateToProps = state => ({
-  madeReservation: state.seatsReducer.madeReservation,
+  // madeReservation: state.seatsReducer.madeReservation,
+  token: state.sessionReducer.token,
+  email: state.sessionReducer.email,
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Seat)

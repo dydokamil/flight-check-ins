@@ -9,6 +9,7 @@ import {
   Input,
   CardBody,
   Button,
+  Alert,
 } from "reactstrap"
 import { connect } from "react-redux"
 
@@ -59,6 +60,11 @@ export class LogIn extends React.Component {
             </Form>
           </CardBody>
         </Card>
+        {this.props.error && (
+          <Alert style={{ marginTop: "1rem" }} color="danger">
+            {this.props.error}
+          </Alert>
+        )}
       </Container>
     )
   }
@@ -66,6 +72,7 @@ export class LogIn extends React.Component {
 
 const mapStateToProps = state => ({
   email: state.sessionReducer.email,
+  error: state.sessionReducer.error,
 })
 
 const mapDispatchToProps = dispatch => ({
