@@ -24,6 +24,7 @@ export class SignUp extends React.Component {
   }
 
   render() {
+    if (this.props.email) this.props.history.push("/")
     return (
       <Container>
         <Card>
