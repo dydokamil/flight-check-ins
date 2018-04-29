@@ -1,14 +1,21 @@
 import * as actions from "../actions"
 
-const INITIAL_STATE = { reservedSeat: null, reservedUntil: null }
+const INITIAL_STATE = { error: null, reservedSeat: null, reservedUntil: null }
 
 const reservationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actions.MAKE_RESERVATION_SUCCESS:
+    case actions.GET_RESERVATION_SUCCESS:
       return {
-        reservedSeat: action.payload.seat.id,
-        reservedUntil: action.payload.reservedUntil,
-        paid: action.payload.paid,
+        error: null,
+        ...action.payload,
+      }
+
+    case actions.MAKE_RESERVATION_FAILURE:
+    case actions.GET_RESERVATION_FAILURE:
+      return {
+        ...state,
+        error: action.payload,
       }
 
     default:

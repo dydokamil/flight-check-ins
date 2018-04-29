@@ -9,7 +9,9 @@ class Reservation extends React.Component {
   state = { seatId: null }
 
   componentDidMount = () => {
-    this.setState({ seatId: this.props.reservedSeat })
+    if (this.props.email) {
+      this.props.onGetReservation({ token: this.props.token })
+    }
   }
 
   cancelReservation = () => {
@@ -17,23 +19,23 @@ class Reservation extends React.Component {
   }
 
   render() {
-    const { seats, reservedSeat, basePrice, checkInFee, randomly } = this.props
-
-    const seatFee =
-      reservedSeat && seats.find(seat => seat.id === reservedSeat).fee
-
-    const randomFee = randomly ? 0 : checkInFee
+    const { paid, price, reservedUntil, seat } = this.props
 
     return (
       <Container>
         <h1>Reservation</h1>
-        {!this.props.madeReservation ? (
+        {!this.props.seat ? (
           <h2>You have not made any reservations.</h2>
         ) : (
           <div>
-            <div>Your seat: {reservedSeat}</div>
-            <div>Price: ${basePrice + seatFee + randomFee}</div>
-            <Button onClick={this.cancelReservation} color="danger">
+            <div>Your seat: {seat.id}</div>
+            <div>Price: ${price}</div>
+            <div>Paid: {paid ? "Yes" : "No"}</div>
+            <Button
+              disabled={true}
+              onClick={this.cancelReservation}
+              color="danger"
+            >
               Cancel Reservation
             </Button>
           </div>
@@ -44,20 +46,22 @@ class Reservation extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  madeReservation: state.seatsReducer.madeReservation,
-  reservedSeat: state.seatsReducer.reservedSeat,
-  seats: state.seatsReducer.seats,
-  basePrice: state.seatsReducer.basePrice,
-  checkInFee: state.seatsReducer.checkInFee,
-  randomly: state.seatsReducer.randomly,
+  email: state.sessionReducer.email,
+  token: state.sessionReducer.token,
+
+  paid: state.reservationReducer.paid,
+  price: state.reservationReducer.price,
+  reservedUntil: state.reservationReducer.reservedUntil,
+  seat: state.reservationReducer.seat,
 })
 
 const mapDispatchToProps = dispatch => ({
-  onCancelReservation: seatId =>
-    dispatch({
-      type: actions.CANCEL_RESERVATION,
-      payload: { id: seatId },
-    }),
+  onGetReservation: payload => dispatch(actions.getReservation(payload)),
+  // onCancelReservation: seatId =>
+  //   dispatch({
+  //     type: actions.CANCEL_RESERVATION,
+  //     payload,
+  //   }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reservation)
