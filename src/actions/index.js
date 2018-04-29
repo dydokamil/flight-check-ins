@@ -106,6 +106,18 @@ export function makeReservation(payload) {
   }
 }
 
+export function makeRandomReservation(payload) {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/reservations/random`, payload)
+      .then(res => dispatch(makeReservationSuccess(res.data)))
+      .then(res => dispatch(fetchSeats()))
+      .catch(err => {
+        dispatch(makeReservationFailure(err.response.data.error))
+      })
+  }
+}
+
 export const makeReservationSuccess = payload => ({
   type: MAKE_RESERVATION_SUCCESS,
   payload,

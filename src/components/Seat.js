@@ -73,11 +73,6 @@ class Seat extends React.Component {
 
 const mapDispatchToProps = dispatch => ({
   onBookSeat: payload => {
-    // refetch seats after 3 minutes
-    // setTimeout(
-    //   dispatch({ type: actions.FETCH_SEATS, payload: {} }),
-    //   1000 * 60 * 3 + 5000,
-    // );
     dispatch(actions.makeReservation(payload))
   },
 })

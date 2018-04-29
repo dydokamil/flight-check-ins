@@ -33,12 +33,9 @@ class Seats extends React.Component {
   }
 
   bookRandomSeat = () => {
-    const availableSeats = this.props.seats.filter(seat => seat.available)
-    const seatIdList = availableSeats.map(seat => seat.id)
+    const { token } = this.props
 
-    const randomSeat = seatIdList[Math.floor(Math.random() * seatIdList.length)]
-
-    this.props.onBookSeat(randomSeat)
+    this.props.onRandomReservation({ token: this.props.token })
   }
 
   render() {
@@ -79,7 +76,7 @@ class Seats extends React.Component {
         <Row>
           <Col style={{ marginTop: "1rem" }}>
             <Button
-              disabled={this.props.madeReservation}
+              disabled={!this.props.token}
               onClick={this.bookRandomSeat}
               color="primary"
             >
@@ -98,23 +95,16 @@ const mapStateToProps = state => ({
   checkInFee: state.seatsReducer.checkInFee,
   madeReservation: state.seatsReducer.madeReservation,
   error: state.seatsReducer.error,
+  token: state.sessionReducer.token,
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchSeats: () => {
     dispatch(actions.fetchSeats())
   },
-  onBookSeat: seatId => {
-    // refetch seats after 3 minutes
-    // setTimeout(
-    //   () => dispatch({ type: actions.FETCH_SEATS, payload: {} }),
-    //   1000 * 60 * 3 + 5000,
-    // )
-    dispatch({
-      type: actions.MAKE_RESERVATION,
-      payload: { id: seatId, randomly: true },
-    })
-  },
+
+  onRandomReservation: payload =>
+    dispatch(actions.makeRandomReservation(payload)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Seats)
