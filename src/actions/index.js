@@ -49,7 +49,7 @@ export function signUp(payload) {
     axios
       .post(`${ROOT_URL}/users`, payload)
       .then(res => {
-        dispatch(signUpSuccess({ ...payload }))
+        dispatch(signUpSuccess(res.data))
       })
       .catch(err => {
         dispatch(signUpFailure(err.response.data.error))
@@ -57,3 +57,38 @@ export function signUp(payload) {
   }
 }
 // <sign up
+
+// log in>
+export const LOG_IN = "LOG_IN"
+export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS"
+export const LOG_IN_FAILURE = "LOG_IN_FAILURE"
+
+export const logInFailure = err => ({
+  type: LOG_IN_FAILURE,
+  payload: err,
+})
+
+export const logInSuccess = payload => ({
+  type: LOG_IN_SUCCESS,
+  payload,
+})
+
+export function logIn(payload) {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/users/login`, payload)
+      .then(res => {
+        dispatch(signUpSuccess(res.data))
+      })
+      .catch(err => {
+        dispatch(signUpFailure(err.response.data.error))
+      })
+  }
+}
+// <log in
+export const LOG_OUT = "LOG_OUT"
+
+export const logOut = () => ({
+  type: LOG_OUT,
+})
+// <log out

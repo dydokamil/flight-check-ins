@@ -3,6 +3,7 @@ import React from "react"
 import { Link } from "react-router-dom"
 import "./Navbar.css"
 import { connect } from "react-redux"
+import * as actions from "../actions"
 
 export class Navbar extends React.Component {
   state = {
@@ -13,6 +14,11 @@ export class Navbar extends React.Component {
       isOpen: !this.state.isOpen,
     })
   }
+
+  logOut = () => {
+    this.props.onLogOut()
+  }
+
   render() {
     const { email } = this.props
     return (
@@ -39,7 +45,9 @@ export class Navbar extends React.Component {
                   <a className="nav-link">Logged as {email}</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Log Out</a>
+                  <button onClick={this.logOut} className="nav-link">
+                    Log Out
+                  </button>
                 </li>
               </React.Fragment>
             ) : (
@@ -68,6 +76,8 @@ const mapStateToProps = state => ({
   email: state.sessionReducer.email,
 })
 
-const mapDispatchToProps = dispatch => ({})
+const mapDispatchToProps = dispatch => ({
+  onLogOut: () => dispatch(actions.logOut()),
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

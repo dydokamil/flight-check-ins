@@ -1,3 +1,9 @@
 .myNavbar {
   margin-bottom: 1rem;
 }
+
+button.nav-link {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
