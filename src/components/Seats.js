@@ -35,7 +35,7 @@ class Seats extends React.Component {
   bookRandomSeat = () => {
     const { token } = this.props
 
-    this.props.onRandomReservation({ token: this.props.token })
+    this.props.onRandomReservation({ token })
   }
 
   render() {

@@ -7,3 +7,9 @@ button.nav-link {
   border: none;
   cursor: pointer;
 }
+
+@media screen and (max-width: 768px) {
+  .navbar-nav {
+    display: none;
+  }
+}

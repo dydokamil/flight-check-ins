@@ -14,8 +14,6 @@ const INITIAL_STATE = {
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case actions.FETCH_SEATS_SUCCESS:
-      const { seats } = action.payload
-
       return { ...state, ...action.payload, error: null }
 
     case actions.FETCH_SEATS_FAILURE:

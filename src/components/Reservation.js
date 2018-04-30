@@ -31,6 +31,7 @@ class Reservation extends React.Component {
             <div>Your seat: {seat.id}</div>
             <div>Price: ${price}</div>
             <div>Paid: {paid ? "Yes" : "No"}</div>
+            <div>Reserved until: {reservedUntil}</div>
             <Button onClick={this.cancelReservation} color="danger">
               Cancel Reservation
             </Button>
