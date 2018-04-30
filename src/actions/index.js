@@ -2,8 +2,6 @@ import axios from "axios"
 
 export const ROOT_URL = "http://localhost:4000"
 
-export const CANCEL_RESERVATION = "CANCEL_RESERVATION"
-
 // fetch seats>
 export const FETCH_SEATS_SUCCESS = "FETCH_SEATS_SUCCESS"
 export const FETCH_SEATS_FAILURE = "FETCH_SEATS_FAILURE"
@@ -18,14 +16,12 @@ export const fetchSeatsSuccess = data => ({
   payload: data,
 })
 
-export function fetchSeats() {
-  return dispatch => {
-    axios
-      .get(`${ROOT_URL}/seats`)
-      .then(res => dispatch(fetchSeatsSuccess(res.data)))
-      .catch(err => dispatch(fetchSeatsFailure(err.message)))
-  }
-}
+export const fetchSeats = () => dispatch =>
+  axios
+    .get(`${ROOT_URL}/seats`)
+    .then(res => dispatch(fetchSeatsSuccess(res.data)))
+    .catch(err => dispatch(fetchSeatsFailure(err.message)))
+
 // <fetch seats
 
 // sign up>
@@ -43,18 +39,15 @@ export const signUpSuccess = payload => ({
   payload,
 })
 
-export function signUp(payload) {
-  return dispatch => {
-    axios
-      .post(`${ROOT_URL}/users`, payload)
-      .then(res => {
-        dispatch(signUpSuccess(res.data))
-      })
-      .catch(err => {
-        dispatch(signUpFailure(err.response.data.error))
-      })
-  }
-}
+export const signUp = payload => dispatch =>
+  axios
+    .post(`${ROOT_URL}/users`, payload)
+    .then(res => {
+      dispatch(signUpSuccess(res.data))
+    })
+    .catch(err => {
+      dispatch(signUpFailure(err.response.data.error))
+    })
 // <sign up
 
 // log in>
@@ -72,18 +65,16 @@ export const logInSuccess = payload => ({
   payload,
 })
 
-export function logIn(payload) {
-  return dispatch => {
-    axios
-      .post(`${ROOT_URL}/users/login`, payload)
-      .then(res => {
-        dispatch(logInSuccess(res.data))
-      })
-      .catch(err => {
-        dispatch(logInFailure(err.response.data.error))
-      })
-  }
-}
+export const logIn = payload => dispatch =>
+  axios
+    .post(`${ROOT_URL}/users/login`, payload)
+    .then(res => {
+      dispatch(logInSuccess(res.data))
+    })
+    .catch(err => {
+      dispatch(logInFailure(err.response.data.error))
+    })
+
 // log out>
 export const LOG_OUT = "LOG_OUT"
 
@@ -97,13 +88,12 @@ export const MAKE_RESERVATION = "MAKE_RESERVATION"
 export const MAKE_RESERVATION_SUCCESS = "MAKE_RESERVATION_SUCCESS"
 export const MAKE_RESERVATION_FAILURE = "MAKE_RESERVATION_FAILURE"
 
-export function makeReservation(payload) {
-  return dispatch => {
-    axios
-      .post(`${ROOT_URL}/reservations`, payload)
-      .then(res => dispatch(makeReservationSuccess(res.data)))
-      .catch(err => dispatch(makeReservationFailure(err.response.data.error)))
-  }
+export const makeReservation = payload => dispatch => {
+  axios
+    .post(`${ROOT_URL}/reservations`, payload)
+    .then(res => dispatch(makeReservationSuccess(res.data)))
+    .then(() => dispatch(fetchSeats()))
+    .catch(err => dispatch(makeReservationFailure(err.response.data.error)))
 }
 
 export const makeReservationSuccess = payload => ({
@@ -116,14 +106,16 @@ export const makeReservationFailure = err => ({
   payload: err,
 })
 
-export const makeRandomReservation = payload => dispatch => {
-  axios
-    .post(`${ROOT_URL}/reservations/random`, payload)
-    .then(res => dispatch(makeReservationSuccess(res.data)))
-    .then(res => dispatch(fetchSeats()))
-    .catch(err => {
-      dispatch(makeReservationFailure(err.response.data.error))
-    })
+export const makeRandomReservation = payload => {
+  return dispatch => {
+    axios
+      .post(`${ROOT_URL}/reservations/random`, payload)
+      .then(res => dispatch(makeReservationSuccess(res.data)))
+      .then(() => dispatch(fetchSeats()))
+      .catch(err => {
+        dispatch(makeReservationFailure(err.response.data.error))
+      })
+  }
 }
 // <make reservation
 
@@ -139,18 +131,35 @@ export const getReservationSuccess = res => ({
 
 export const getReservationFailure = err => ({
   type: GET_RESERVATION_FAILURE,
-  payload: err.response.data.error,
+  payload: err,
 })
 
-export const getReservation = payload => {
-  console.log(payload)
-  return dispatch =>
-    axios
-      .get(`${ROOT_URL}/reservations/mine`, { headers: payload })
-      .then(res => dispatch(getReservationSuccess(res)))
-      .catch(err => {
-        console.log("ERR", err)
-        dispatch(getReservationFailure(err.response.data.error))
-      })
-}
+export const getReservation = payload => dispatch =>
+  axios
+    .get(`${ROOT_URL}/reservations/mine`, { headers: payload })
+    .then(res => dispatch(getReservationSuccess(res)))
+    .catch(err => dispatch(getReservationFailure(err.response.data.error)))
+
 // <get reservations
+
+// cancel reservation>
+export const CANCEL_RESERVATION = "CANCEL_RESERVATION"
+export const CANCEL_RESERVATION_SUCCESS = "CANCEL_RESERVATION_SUCCESS"
+export const CANCEL_RESERVATION_FAILURE = "CANCEL_RESERVATION_FAILURE"
+
+export const cancelReservationSuccess = payload => ({
+  type: CANCEL_RESERVATION_SUCCESS,
+  payload,
+})
+
+export const cancelReservationFailure = error => ({
+  type: CANCEL_RESERVATION_FAILURE,
+  payload: error,
+})
+
+export const cancelReservation = payload => dispatch =>
+  axios
+    .post(`${ROOT_URL}/reservations/cancel`, payload)
+    .then(res => dispatch(cancelReservationSuccess(res.data)))
+    .catch(err => dispatch(cancelReservationFailure(err.response.data.error)))
+// <cancel reservation

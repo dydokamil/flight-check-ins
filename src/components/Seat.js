@@ -23,6 +23,7 @@ class Seat extends React.Component {
     const payload = { token: this.props.token, seat: this.state.id }
 
     this.props.onBookSeat(payload)
+    this.setState({ popoverOpen: false })
   }
 
   render() {

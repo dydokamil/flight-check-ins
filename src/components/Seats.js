@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { Button } from "reactstrap"
-import { Container, Row, Col } from "reactstrap"
+import { Container, Row, Col, Alert } from "reactstrap"
 
 import Seat from "./Seat"
 import "./Seats.css"
@@ -49,6 +49,9 @@ class Seats extends React.Component {
     const converted = convertTo2D(seats)
     return (
       <Container>
+        {this.props.reservationError && (
+          <Alert color="danger">{this.props.reservationError}</Alert>
+        )}
         <h1>Seats</h1>
         {seats &&
           converted.map((seatRow, rowIdx) => (
@@ -96,13 +99,12 @@ const mapStateToProps = state => ({
   madeReservation: state.seatsReducer.madeReservation,
   error: state.seatsReducer.error,
   token: state.sessionReducer.token,
+
+  reservationError: state.reservationReducer.error,
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSeats: () => {
-    dispatch(actions.fetchSeats())
-  },
-
+  fetchSeats: () => dispatch(actions.fetchSeats()),
   onRandomReservation: payload =>
     dispatch(actions.makeRandomReservation(payload)),
 })

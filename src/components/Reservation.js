@@ -15,7 +15,7 @@ class Reservation extends React.Component {
   }
 
   cancelReservation = () => {
-    this.props.onCancelReservation(this.state.seatId)
+    this.props.onCancelReservation({ token: this.props.token })
   }
 
   render() {
@@ -31,11 +31,7 @@ class Reservation extends React.Component {
             <div>Your seat: {seat.id}</div>
             <div>Price: ${price}</div>
             <div>Paid: {paid ? "Yes" : "No"}</div>
-            <Button
-              disabled={true}
-              onClick={this.cancelReservation}
-              color="danger"
-            >
+            <Button onClick={this.cancelReservation} color="danger">
               Cancel Reservation
             </Button>
           </div>
@@ -57,11 +53,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   onGetReservation: payload => dispatch(actions.getReservation(payload)),
-  // onCancelReservation: seatId =>
-  //   dispatch({
-  //     type: actions.CANCEL_RESERVATION,
-  //     payload,
-  //   }),
+  onCancelReservation: payload => dispatch(actions.cancelReservation(payload)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reservation)

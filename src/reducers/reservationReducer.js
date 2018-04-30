@@ -18,6 +18,9 @@ const reservationReducer = (state = INITIAL_STATE, action) => {
         error: action.payload,
       }
 
+    case actions.CANCEL_RESERVATION_SUCCESS:
+      return INITIAL_STATE
+
     default:
       return state
   }
