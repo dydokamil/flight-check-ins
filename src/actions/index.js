@@ -2,6 +2,14 @@ import axios from "axios"
 
 export const ROOT_URL = "http://localhost:4000"
 
+// clean up>
+export const CLEAN_UP = "CLEAN_UP"
+
+export const cleanUp = () => ({
+  type: CLEAN_UP,
+})
+// <clean up
+
 // fetch seats>
 export const FETCH_SEATS_SUCCESS = "FETCH_SEATS_SUCCESS"
 export const FETCH_SEATS_FAILURE = "FETCH_SEATS_FAILURE"

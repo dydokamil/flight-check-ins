@@ -51,19 +51,19 @@ export class Navbar extends React.Component {
                 </li>
               </React.Fragment>
             ) : (
-              <React.Fragment>
-                <li className="nav-item">
-                  <Link to="/signup" className="nav-link">
-                    Sign Up
+                <React.Fragment>
+                  <li className="nav-item">
+                    <Link to="/signup" className="nav-link">
+                      Sign Up
                   </Link>
-                </li>
-                <li className="nav-item">
-                  <Link to="/login" className="nav-link">
-                    Login
+                  </li>
+                  <li className="nav-item">
+                    <Link to="/login" className="nav-link">
+                      Login
                   </Link>
-                </li>
-              </React.Fragment>
-            )}
+                  </li>
+                </React.Fragment>
+              )}
             {/* Session */}
           </ul>
         </nav>
@@ -77,7 +77,10 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onLogOut: () => dispatch(actions.logOut()),
+  onLogOut: () => {
+    dispatch(actions.logOut())
+    dispatch(actions.cleanUp())
+  },
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)
