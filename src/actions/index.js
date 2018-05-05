@@ -130,13 +130,10 @@ export const makeReservation = (payload) => (dispatch) => {
 
 export const makeRandomReservation = (payload) => (dispatch) => {
   dispatch(makeReservationRequest())
-  axios
+  return axios
     .post(`${ROOT_URL}/reservations/random`, payload)
     .then((res) => dispatch(makeReservationSuccess(res.data)))
-    .then(() => dispatch(fetchSeats()))
-    .catch((err) => {
-      dispatch(makeReservationFailure(err.response.data.error))
-    })
+    .catch((err) => dispatch(makeReservationFailure(err.response.data.error)))
 }
 
 // <make reservation
@@ -147,22 +144,22 @@ export const GET_RESERVATION_SUCCESS = "GET_RESERVATION_SUCCESS"
 export const GET_RESERVATION_FAILURE = "GET_RESERVATION_FAILURE"
 
 export const getReservationRequest = () => ({
-  type: MAKE_RESERVATION_REQUEST,
+  type: GET_RESERVATION_REQUEST,
 })
 
-export const getReservationSuccess = (res) => ({
+export const getReservationSuccess = (payload) => ({
   type: GET_RESERVATION_SUCCESS,
-  payload: res,
+  payload,
 })
 
-export const getReservationFailure = (err) => ({
+export const getReservationFailure = (error) => ({
   type: GET_RESERVATION_FAILURE,
-  payload: err,
+  error,
 })
 
 export const getReservation = (payload) => (dispatch) => {
   dispatch(getReservationRequest())
-  axios
+  return axios
     .get(`${ROOT_URL}/reservations/mine`, { headers: payload })
     .then((res) => dispatch(getReservationSuccess(res.data)))
     .catch((err) => dispatch(getReservationFailure(err.response.data.error)))

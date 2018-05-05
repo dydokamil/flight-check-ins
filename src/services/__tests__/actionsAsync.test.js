@@ -12,6 +12,7 @@ import { ROOT_URL } from "../../consts"
 import seats from "../../__mockData__/seats.json"
 import signupData from "../../__mockData__/signup.json"
 import reservationData from "../../__mockData__/reservation.json"
+import makeReservationData from "../../__mockData__/makeReservation.json"
 
 // jest.mock("axios")
 
@@ -132,7 +133,22 @@ describe("async actions", () => {
     ]
 
     const store = mockStore({})
-    await store.dispatch(actions.makeReservation(reservationData))
+    await store.dispatch(actions.makeReservation(makeReservationData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create MAKE_RESERVATION_SUCCESS when random reservation is done", async () => {
+    mock.onPost(`${ROOT_URL}/reservations/random`).reply(200, {
+      ...reservationData,
+    })
+
+    const expectedActions = [
+      { type: actions.MAKE_RESERVATION_REQUEST },
+      { type: actions.MAKE_RESERVATION_SUCCESS, payload: reservationData },
+    ]
+
+    const store = mockStore({})
+    await store.dispatch(actions.makeRandomReservation(makeReservationData))
     expect(store.getActions()).toEqual(expectedActions)
   })
 
@@ -152,7 +168,42 @@ describe("async actions", () => {
     ]
 
     const store = mockStore({ error: null, token: null, email: null })
-    await store.dispatch(actions.makeReservation(signupData))
+    await store.dispatch(actions.makeReservation(makeReservationData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create GET_RESERVATION_SUCCESS when reservation is fetched", async () => {
+    mock.onGet(`${ROOT_URL}/reservations/mine`).reply(200, {
+      ...reservationData,
+    })
+
+    const expectedActions = [
+      { type: actions.GET_RESERVATION_REQUEST },
+      { type: actions.GET_RESERVATION_SUCCESS, payload: reservationData },
+    ]
+
+    const store = mockStore({})
+    await store.dispatch(actions.getReservation())
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create GET_RESERVATION_FAILURE when reservation is not fetched", async () => {
+    expect.assertions(1)
+
+    mock
+      .onGet(`${ROOT_URL}/reservations/mine`)
+      .reply(500, { error: "Some reservation error" })
+
+    const expectedActions = [
+      { type: actions.GET_RESERVATION_REQUEST },
+      {
+        type: actions.GET_RESERVATION_FAILURE,
+        error: "Some reservation error",
+      },
+    ]
+
+    const store = mockStore({ error: null, token: null, email: null })
+    await store.dispatch(actions.getReservation())
     expect(store.getActions()).toEqual(expectedActions)
   })
 })
