@@ -89,12 +89,8 @@ export const logIn = (payload) => (dispatch) => {
   dispatch(logInRequest())
   return axios
     .post(`${ROOT_URL}/users/login`, payload)
-    .then((res) => {
-      dispatch(logInSuccess(res.data))
-    })
-    .catch((err) => {
-      dispatch(logInFailure(err.response.data.error))
-    })
+    .then((res) => dispatch(logInSuccess(res.data)))
+    .catch((err) => dispatch(logInFailure(err.response.data.error)))
 }
 
 // log out>
@@ -119,17 +115,16 @@ export const makeReservationSuccess = (payload) => ({
   payload,
 })
 
-export const makeReservationFailure = (err) => ({
+export const makeReservationFailure = (error) => ({
   type: MAKE_RESERVATION_FAILURE,
-  payload: err,
+  error,
 })
 
 export const makeReservation = (payload) => (dispatch) => {
   dispatch(makeReservationRequest())
-  axios
+  return axios
     .post(`${ROOT_URL}/reservations`, payload)
     .then((res) => dispatch(makeReservationSuccess(res.data)))
-    // .then(() => dispatch(fetchSeats()))
     .catch((err) => dispatch(makeReservationFailure(err.response.data.error)))
 }
 

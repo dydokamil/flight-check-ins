@@ -11,6 +11,7 @@ import * as actions from "../../actions"
 import { ROOT_URL } from "../../consts"
 import seats from "../../__mockData__/seats.json"
 import signupData from "../../__mockData__/signup.json"
+import reservationData from "../../__mockData__/reservation.json"
 
 // jest.mock("axios")
 
@@ -88,7 +89,7 @@ describe("async actions", () => {
     expect(store.getActions()).toEqual(expectedActions)
   })
 
-  it("should create LOG_IN_SUCCESS when signing up is done", async () => {
+  it("should create LOG_IN_SUCCESS when log in is done", async () => {
     mock.onPost(`${ROOT_URL}/users/login`).reply(200, {
       ...signupData,
     })
@@ -103,7 +104,7 @@ describe("async actions", () => {
     expect(store.getActions()).toEqual(expectedActions)
   })
 
-  it("should create LOG_IN_FAILURE when signing up is done", async () => {
+  it("should create LOG_IN_FAILURE when log in is done", async () => {
     expect.assertions(1)
 
     mock
@@ -117,6 +118,41 @@ describe("async actions", () => {
 
     const store = mockStore({ error: null, token: null, email: null })
     await store.dispatch(actions.logIn(signupData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create MAKE_RESERVATION_SUCCESS when reservation is done", async () => {
+    mock.onPost(`${ROOT_URL}/reservations`).reply(200, {
+      ...reservationData,
+    })
+
+    const expectedActions = [
+      { type: actions.MAKE_RESERVATION_REQUEST },
+      { type: actions.MAKE_RESERVATION_SUCCESS, payload: reservationData },
+    ]
+
+    const store = mockStore({})
+    await store.dispatch(actions.makeReservation(reservationData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create MAKE_RESERVATION_FAILURE when reservation is done", async () => {
+    expect.assertions(1)
+
+    mock
+      .onPost(`${ROOT_URL}/reservations`)
+      .reply(500, { error: "Some reservation error" })
+
+    const expectedActions = [
+      { type: actions.MAKE_RESERVATION_REQUEST },
+      {
+        type: actions.MAKE_RESERVATION_FAILURE,
+        error: "Some reservation error",
+      },
+    ]
+
+    const store = mockStore({ error: null, token: null, email: null })
+    await store.dispatch(actions.makeReservation(signupData))
     expect(store.getActions()).toEqual(expectedActions)
   })
 })

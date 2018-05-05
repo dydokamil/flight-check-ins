@@ -83,7 +83,7 @@ describe("Make reservation action creators", () => {
     const error = new Error("Some error")
     const expectedAction = {
       type: actions.MAKE_RESERVATION_FAILURE,
-      payload: error,
+      error,
     }
     expect(actions.makeReservationFailure(error)).toEqual(expectedAction)
   })

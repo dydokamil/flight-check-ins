@@ -1,0 +1,7 @@
+{
+  "paid": false,
+  "price": 65,
+  "reservedUntil": "2018-05-05T20:31:19.660Z",
+  "seat": { "_id": "5aeca7d2f9a79351499ae469", "fee": 5, "id": 4 },
+  "_id": "5aee13e378d36613b6c5d766"
+}

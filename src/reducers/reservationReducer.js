@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   reservedSeat: null,
   reservedUntil: null,
   paid: null,
-  price: null
+  price: null,
 }
 
 const reservationReducer = (state = INITIAL_STATE, action) => {
@@ -21,7 +21,7 @@ const reservationReducer = (state = INITIAL_STATE, action) => {
     case actions.GET_RESERVATION_FAILURE:
       return {
         ...state,
-        error: action.payload,
+        error: action.error,
       }
 
     case actions.CANCEL_RESERVATION_SUCCESS:
