@@ -87,4 +87,36 @@ describe("async actions", () => {
     await store.dispatch(actions.signUp(signupData))
     expect(store.getActions()).toEqual(expectedActions)
   })
+
+  it("should create LOG_IN_SUCCESS when signing up is done", async () => {
+    mock.onPost(`${ROOT_URL}/users/login`).reply(200, {
+      ...signupData,
+    })
+
+    const expectedActions = [
+      { type: actions.LOG_IN_REQUEST },
+      { type: actions.LOG_IN_SUCCESS, payload: signupData },
+    ]
+
+    const store = mockStore({ email: null, token: null })
+    await store.dispatch(actions.logIn(signupData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create LOG_IN_FAILURE when signing up is done", async () => {
+    expect.assertions(1)
+
+    mock
+      .onPost(`${ROOT_URL}/users/login`)
+      .reply(500, { error: "Some signup error" })
+
+    const expectedActions = [
+      { type: actions.LOG_IN_REQUEST },
+      { type: actions.LOG_IN_FAILURE, error: "Some signup error" },
+    ]
+
+    const store = mockStore({ error: null, token: null, email: null })
+    await store.dispatch(actions.logIn(signupData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
 })

@@ -75,9 +75,9 @@ export const logInRequest = () => ({
   type: LOG_IN_REQUEST,
 })
 
-export const logInFailure = (err) => ({
+export const logInFailure = (error) => ({
   type: LOG_IN_FAILURE,
-  payload: err,
+  error,
 })
 
 export const logInSuccess = (payload) => ({

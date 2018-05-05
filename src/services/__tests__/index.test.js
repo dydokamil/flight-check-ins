@@ -54,7 +54,7 @@ describe("Log in action creators", () => {
     const error = new Error("Some error")
     const expectedAction = {
       type: actions.LOG_IN_FAILURE,
-      payload: error,
+      error,
     }
     expect(actions.logInFailure(error)).toEqual(expectedAction)
   })
