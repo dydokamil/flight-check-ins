@@ -17,3 +17,10 @@
   /* align-items: flex-end; */
   /* justify-content: space-between; */
 }
+
+.centered-div {
+  /* text-align: center; */
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}

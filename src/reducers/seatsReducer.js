@@ -4,7 +4,7 @@ import moment from "moment"
 import * as actions from "../actions"
 
 const INITIAL_STATE = {
-  // seats: seatsData,
+  loading: false,
   seats: null,
   basePrice: null,
   checkInFee: null,
@@ -13,12 +13,23 @@ const INITIAL_STATE = {
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case actions.FETCH_SEATS_REQUEST:
+      return { ...state, loading: true }
+
     case actions.FETCH_SEATS_SUCCESS:
-      return { ...state, ...action.payload, error: null }
+      return { ...state, ...action.payload, error: null, loading: false }
 
     case actions.FETCH_SEATS_FAILURE:
-      return { ...state, error: action.payload }
+      return { ...state, error: action.payload, loading: false }
 
+    case actions.MAKE_RESERVATION_SUCCESS:
+      return {
+        ...state,
+        seats: state.seats.map((seat) => ({
+          ...seat,
+          available: action.payload.seat.id !== seat.id,
+        })),
+      }
     default:
       return state
   }

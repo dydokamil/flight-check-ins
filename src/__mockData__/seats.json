@@ -1,0 +1,20 @@
+{
+  "basePrice": 50,
+  "checkInFee": 10,
+  "seats": [
+    {
+      "__v": 0,
+      "_id": "5aeca7d2f9a79351499ae466",
+      "available": true,
+      "fee": 10,
+      "id": 1
+    },
+    {
+      "__v": 0,
+      "_id": "5aeca7d2f9a79351499ae467",
+      "available": true,
+      "fee": 0,
+      "id": 2
+    }
+  ]
+}

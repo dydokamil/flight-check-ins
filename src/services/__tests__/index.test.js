@@ -1,4 +1,4 @@
-import * as actions from "./index"
+import * as actions from "../../actions"
 
 describe("Fetch seats action creators", () => {
   it("should create an action for a successful seats fetch", () => {
@@ -14,7 +14,7 @@ describe("Fetch seats action creators", () => {
     const error = new Error("Some error")
     const expectedAction = {
       type: actions.FETCH_SEATS_FAILURE,
-      payload: error,
+      error,
     }
     expect(actions.fetchSeatsFailure(error)).toEqual(expectedAction)
   })
