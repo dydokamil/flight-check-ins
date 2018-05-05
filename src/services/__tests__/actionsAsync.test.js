@@ -10,6 +10,7 @@ import axios from "axios"
 import * as actions from "../../actions"
 import { ROOT_URL } from "../../consts"
 import seats from "../../__mockData__/seats.json"
+import signupData from "../../__mockData__/signup.json"
 
 // jest.mock("axios")
 
@@ -45,11 +46,11 @@ describe("async actions", () => {
   it("should create FETCH_SEATS_FAILURE when fetching seats is done", async () => {
     expect.assertions(1)
 
-    mock.onGet(`${ROOT_URL}/seats`).reply(500, { error: "Some error" })
+    mock.onGet(`${ROOT_URL}/seats`).reply(500, { error: "Some seats error" })
 
     const expectedActions = [
       { type: actions.FETCH_SEATS_REQUEST },
-      { type: actions.FETCH_SEATS_FAILURE, error: "Some error" },
+      { type: actions.FETCH_SEATS_FAILURE, error: "Some seats error" },
     ]
 
     const store = mockStore({ seats: {} })
@@ -57,39 +58,33 @@ describe("async actions", () => {
     expect(store.getActions()).toEqual(expectedActions)
   })
 
-  // it("should create FETCH_SEATS_SUCCESS when fetching seats is done", () => {
-  //   fetchMock.getOnce(`${ROOT_URL}/seats`, {
-  //     body: seatsData,
-  //     headers: { "content-type": "application/json" },
-  //   })
+  it("should create SIGN_UP_SUCCESS when signing up is done", async () => {
+    mock.onPost(`${ROOT_URL}/users`).reply(200, {
+      ...signupData,
+    })
 
-  //   const expectedActions = [
-  //     { type: actions.FETCH_SEATS_REQUEST },
-  //     { type: actions.FETCH_SEATS_SUCCESS, payload: seatsData },
-  //   ]
-  //   const store = mockStore({ seats: {} })
+    const expectedActions = [
+      { type: actions.SIGN_UP_REQUEST },
+      { type: actions.SIGN_UP_SUCCESS, payload: signupData },
+    ]
 
-  //   return store.dispatch(actions.fetchSeats()).then(() => {
-  //     expect(store.getActions()).toEqual(expectedActions)
-  //   })
-  // })
+    const store = mockStore({ email: null, token: null })
+    await store.dispatch(actions.signUp(signupData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
 
-  // it("should create FETCH_SEATS_FAILURE when fetching seats is done", () => {
-  //   const errorMessage = "Mock Network Error"
-  //   expect.assertions(1)
+  it("should create SIGN_UP_FAILURE when signing up is done", async () => {
+    expect.assertions(1)
 
-  //   fetchMock.getOnce(`${ROOT_URL}/seats`, () => {
-  //     throw new Error(errorMessage)
-  //   })
+    mock.onPost(`${ROOT_URL}/users`).reply(500, { error: "Some signup error" })
 
-  //   const expectedActions = [
-  //     { type: actions.FETCH_SEATS_REQUEST },
-  //     { type: actions.FETCH_SEATS_FAILURE, error: errorMessage },
-  //   ]
-  //   const store = mockStore({ seats: {} })
+    const expectedActions = [
+      { type: actions.SIGN_UP_REQUEST },
+      { type: actions.SIGN_UP_FAILURE, error: "Some signup error" },
+    ]
 
-  //   return store.dispatch(actions.fetchSeats()).then(() => {
-  //     expect(store.getActions()).toEqual(expectedActions)
-  //   })
-  // })
+    const store = mockStore({ error: null, token: null, email: null })
+    await store.dispatch(actions.signUp(signupData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
 })

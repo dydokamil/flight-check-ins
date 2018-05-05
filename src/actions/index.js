@@ -24,9 +24,9 @@ export const fetchSeatsFailure = (error) => ({
   error,
 })
 
-export const fetchSeatsSuccess = (body) => ({
+export const fetchSeatsSuccess = (payload) => ({
   type: FETCH_SEATS_SUCCESS,
-  payload: body,
+  payload,
 })
 
 export const fetchSeats = () => (dispatch) => {
@@ -47,9 +47,9 @@ export const signUpRequest = () => ({
   type: SIGN_UP_REQUEST,
 })
 
-export const signUpFailure = (err) => ({
+export const signUpFailure = (error) => ({
   type: SIGN_UP_FAILURE,
-  payload: err,
+  error,
 })
 
 export const signUpSuccess = (payload) => ({

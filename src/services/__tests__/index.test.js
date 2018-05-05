@@ -34,7 +34,7 @@ describe("Sign up action creators", () => {
     const error = new Error("Some error")
     const expectedAction = {
       type: actions.SIGN_UP_FAILURE,
-      payload: error,
+      error,
     }
     expect(actions.signUpFailure(error)).toEqual(expectedAction)
   })

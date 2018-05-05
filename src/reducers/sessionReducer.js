@@ -15,7 +15,7 @@ export default (state = INITIAL_STATE, action) => {
 
     case actions.SIGN_UP_FAILURE:
     case actions.LOG_IN_FAILURE:
-      return { ...state, error: action.payload }
+      return { ...state, error: action.error }
 
     case actions.LOG_OUT:
       return INITIAL_STATE
