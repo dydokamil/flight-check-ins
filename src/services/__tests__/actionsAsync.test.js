@@ -152,6 +152,24 @@ describe("async actions", () => {
     expect(store.getActions()).toEqual(expectedActions)
   })
 
+  it("should create MAKE_RESERVATION_FAILRUE when random reservation is not done", async () => {
+    mock.onPost(`${ROOT_URL}/reservations/random`).reply(500, {
+      error: "Some random reservation error",
+    })
+
+    const expectedActions = [
+      { type: actions.MAKE_RESERVATION_REQUEST },
+      {
+        type: actions.MAKE_RESERVATION_FAILURE,
+        error: "Some random reservation error",
+      },
+    ]
+
+    const store = mockStore({})
+    await store.dispatch(actions.makeRandomReservation(makeReservationData))
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
   it("should create MAKE_RESERVATION_FAILURE when reservation is done", async () => {
     expect.assertions(1)
 
@@ -204,6 +222,41 @@ describe("async actions", () => {
 
     const store = mockStore({ error: null, token: null, email: null })
     await store.dispatch(actions.getReservation())
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create CANCEL_RESERVATION_SUCCESS when reservation is fetched", async () => {
+    mock.onPost(`${ROOT_URL}/reservations/cancel`).reply(200, {
+      ...reservationData,
+    })
+
+    const expectedActions = [
+      { type: actions.CANCEL_RESERVATION_REQUEST },
+      { type: actions.CANCEL_RESERVATION_SUCCESS, payload: reservationData },
+    ]
+
+    const store = mockStore({})
+    await store.dispatch(actions.cancelReservation())
+    expect(store.getActions()).toEqual(expectedActions)
+  })
+
+  it("should create CANCEL_RESERVATION_FAILURE when reservation is not fetched", async () => {
+    expect.assertions(1)
+
+    mock
+      .onPost(`${ROOT_URL}/reservations/cancel`)
+      .reply(500, { error: "Some cancel error" })
+
+    const expectedActions = [
+      { type: actions.CANCEL_RESERVATION_REQUEST },
+      {
+        type: actions.CANCEL_RESERVATION_FAILURE,
+        error: "Some cancel error",
+      },
+    ]
+
+    const store = mockStore({})
+    await store.dispatch(actions.cancelReservation())
     expect(store.getActions()).toEqual(expectedActions)
   })
 })

@@ -123,7 +123,7 @@ describe("Cancel reservation action creators", () => {
     const error = new Error("Some error")
     const expectedAction = {
       type: actions.CANCEL_RESERVATION_FAILURE,
-      payload: error,
+      error,
     }
     expect(actions.cancelReservationFailure(error)).toEqual(expectedAction)
   })

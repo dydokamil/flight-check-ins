@@ -173,7 +173,7 @@ export const CANCEL_RESERVATION_SUCCESS = "CANCEL_RESERVATION_SUCCESS"
 export const CANCEL_RESERVATION_FAILURE = "CANCEL_RESERVATION_FAILURE"
 
 export const cancelReservationRequest = () => ({
-  type: MAKE_RESERVATION_REQUEST,
+  type: CANCEL_RESERVATION_REQUEST,
 })
 
 export const cancelReservationSuccess = (payload) => ({
@@ -183,12 +183,12 @@ export const cancelReservationSuccess = (payload) => ({
 
 export const cancelReservationFailure = (error) => ({
   type: CANCEL_RESERVATION_FAILURE,
-  payload: error,
+  error,
 })
 
 export const cancelReservation = (payload) => (dispatch) => {
   dispatch(cancelReservationRequest())
-  axios
+  return axios
     .post(`${ROOT_URL}/reservations/cancel`, payload)
     .then((res) => dispatch(cancelReservationSuccess(res.data)))
     .catch((err) => dispatch(cancelReservationFailure(err.response.data.error)))
