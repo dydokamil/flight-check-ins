@@ -16,14 +16,16 @@ import * as actions from "../actions"
 
 export class LogIn extends React.Component {
   state = { email: "", password: "" }
-  submitLogin = event => {
+  submitLogin = (event) => {
     event.preventDefault()
 
     this.props.onLogIn(this.state)
   }
 
   render() {
-    if (this.props.email) this.props.history.push("/")
+    const { email, error } = this.props.sessionReducer
+
+    if (email) this.props.history.push("/")
     return (
       <Container>
         <Card>
@@ -34,7 +36,7 @@ export class LogIn extends React.Component {
               <FormGroup>
                 <Label for="emailInput">Email</Label>
                 <Input
-                  onChange={event =>
+                  onChange={(event) =>
                     this.setState({ email: event.target.value })
                   }
                   value={this.state.email}
@@ -46,7 +48,7 @@ export class LogIn extends React.Component {
               <FormGroup>
                 <Label for="passwordInput">Password</Label>
                 <Input
-                  onChange={event =>
+                  onChange={(event) =>
                     this.setState({ password: event.target.value })
                   }
                   value={this.state.password}
@@ -55,13 +57,18 @@ export class LogIn extends React.Component {
                   id="passwordInput"
                 />
               </FormGroup>
-              <Button onClick={this.submitLogin}>Log In</Button>
+              <Button
+                id="loginButton"
+                onClick={(event) => this.submitLogin(event)}
+              >
+                Log In
+              </Button>
             </Form>
           </CardBody>
         </Card>
-        {this.props.error && (
+        {error && (
           <Alert style={{ marginTop: "1rem" }} color="danger">
-            {this.props.error}
+            {error}
           </Alert>
         )}
       </Container>
@@ -69,13 +76,12 @@ export class LogIn extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  email: state.sessionReducer.email,
-  error: state.sessionReducer.error,
+export const mapStateToProps = (state) => ({
+  sessionReducer: state.sessionReducer,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onLogIn: payload => dispatch(actions.logIn(payload)),
+export const mapDispatchToProps = (dispatch) => ({
+  onLogIn: (payload) => dispatch(actions.logIn(payload)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn)
