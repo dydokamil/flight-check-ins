@@ -1,28 +1,28 @@
 // import _ from'lodash'
 import moment from "moment"
 
-import * as actions from "../actions"
+import * as types from "../constants/ActionTypes"
 
 const INITIAL_STATE = {
   loading: false,
   seats: null,
   basePrice: null,
   checkInFee: null,
-  reservedSeat: null,
+  error: null,
 }
 
 const seatsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actions.FETCH_SEATS_REQUEST:
+    case types.FETCH_SEATS_REQUEST:
       return { ...state, loading: true }
 
-    case actions.FETCH_SEATS_SUCCESS:
+    case types.FETCH_SEATS_SUCCESS:
       return { ...state, ...action.payload, error: null, loading: false }
 
-    case actions.FETCH_SEATS_FAILURE:
-      return { ...state, error: action.payload, loading: false }
+    case types.FETCH_SEATS_FAILURE:
+      return { ...state, error: action.error, loading: false }
 
-    case actions.MAKE_RESERVATION_SUCCESS:
+    case types.MAKE_RESERVATION_SUCCESS:
       return {
         ...state,
         seats: state.seats.map((seat) => ({

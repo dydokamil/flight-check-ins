@@ -1,4 +1,4 @@
-import * as actions from "../actions"
+import * as types from "../constants/ActionTypes"
 
 const INITIAL_STATE = {
   email: null,
@@ -8,16 +8,16 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case actions.SIGN_UP_SUCCESS:
-    case actions.LOG_IN_SUCCESS:
+    case types.SIGN_UP_SUCCESS:
+    case types.LOG_IN_SUCCESS:
       const { token, email } = action.payload
       return { error: null, token, email }
 
-    case actions.SIGN_UP_FAILURE:
-    case actions.LOG_IN_FAILURE:
+    case types.SIGN_UP_FAILURE:
+    case types.LOG_IN_FAILURE:
       return { ...state, error: action.error }
 
-    case actions.LOG_OUT:
+    case types.LOG_OUT:
       return INITIAL_STATE
 
     default:
