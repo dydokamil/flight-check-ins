@@ -16,14 +16,16 @@ import * as actions from "../actions"
 
 export class SignUp extends React.Component {
   state = { email: "", password: "" }
-  submitSignUp = event => {
+  submitSignUp = (event) => {
     event.preventDefault()
 
     this.props.onSignUp(this.state.email, this.state.password)
   }
 
   render() {
-    if (this.props.email) this.props.history.push("/")
+    const { email, error } = this.props.sessionReducer
+
+    if (email) this.props.history.push("/")
     return (
       <Container>
         <Card>
@@ -37,31 +39,36 @@ export class SignUp extends React.Component {
                   type="email"
                   name="email"
                   id="emailInput"
-                  onChange={event =>
+                  onChange={(event) =>
                     this.setState({ email: event.target.value })
                   }
-                  value={this.email}
+                  value={this.state.email}
                 />
               </FormGroup>
               <FormGroup>
                 <Label for="passwordInput">Password</Label>
                 <Input
-                  onChange={event =>
+                  onChange={(event) =>
                     this.setState({ password: event.target.value })
                   }
-                  value={this.password}
+                  value={this.state.password}
                   type="password"
                   name="passwordInput"
                   id="passwordInput"
                 />
               </FormGroup>
-              <Button onClick={this.submitSignUp}>Sign Up</Button>
+              <Button
+                id="signupButton"
+                onClick={(event) => this.submitSignUp(event)}
+              >
+                Sign Up
+              </Button>
             </Form>
           </CardBody>
         </Card>
-        {this.props.error && (
+        {error && (
           <Alert style={{ marginTop: "1rem" }} color="danger">
-            {this.props.error}
+            {error}
           </Alert>
         )}
       </Container>
@@ -69,15 +76,12 @@ export class SignUp extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-  email: state.sessionReducer.email,
-  error: state.sessionReducer.error,
+export const mapStateToProps = (state) => ({
+  sessionReducer: state.sessionReducer,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onSignUp: (email, password) => {
-    dispatch(actions.signUp({ email, password }))
-  },
+export const mapDispatchToProps = (dispatch) => ({
+  onSignUp: (email, password) => dispatch(actions.signUp({ email, password })),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignUp)
