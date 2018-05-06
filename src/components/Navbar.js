@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 
 import { Link } from "react-router-dom"
 import "./Navbar.css"
@@ -6,15 +7,6 @@ import { connect } from "react-redux"
 import * as actions from "../actions"
 
 export class Navbar extends React.Component {
-  state = {
-    isOpen: false,
-  }
-  toggle = () => {
-    this.setState({
-      isOpen: !this.state.isOpen,
-    })
-  }
-
   logOut = () => {
     this.props.onLogOut()
   }
@@ -72,11 +64,16 @@ export class Navbar extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+Navbar.propTypes = {
+  email: PropTypes.string,
+  onLogOut: PropTypes.func,
+}
+
+export const mapStateToProps = (state) => ({
   email: state.sessionReducer.email,
 })
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   onLogOut: () => {
     dispatch(actions.logOut())
     dispatch(actions.cleanUp())
