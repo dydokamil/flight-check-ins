@@ -8,7 +8,8 @@ import MockAdapter from "axios-mock-adapter"
 import axios from "axios"
 
 import * as actions from "../../actions"
-import { ROOT_URL } from "../../consts"
+import * as types from "../../constants/ActionTypes"
+import { ROOT_URL } from "../../constants/consts"
 import seats from "../../__mockData__/seats.json"
 import signupData from "../../__mockData__/signup.json"
 import reservationData from "../../__mockData__/reservation.json"
@@ -36,8 +37,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.FETCH_SEATS_REQUEST },
-      { type: actions.FETCH_SEATS_SUCCESS, payload: seats },
+      { type: types.FETCH_SEATS_REQUEST },
+      { type: types.FETCH_SEATS_SUCCESS, payload: seats },
     ]
 
     const store = mockStore({ seats: {} })
@@ -51,8 +52,8 @@ describe("async actions", () => {
     mock.onGet(`${ROOT_URL}/seats`).reply(500, { error: "Some seats error" })
 
     const expectedActions = [
-      { type: actions.FETCH_SEATS_REQUEST },
-      { type: actions.FETCH_SEATS_FAILURE, error: "Some seats error" },
+      { type: types.FETCH_SEATS_REQUEST },
+      { type: types.FETCH_SEATS_FAILURE, error: "Some seats error" },
     ]
 
     const store = mockStore({ seats: {} })
@@ -66,8 +67,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.SIGN_UP_REQUEST },
-      { type: actions.SIGN_UP_SUCCESS, payload: signupData },
+      { type: types.SIGN_UP_REQUEST },
+      { type: types.SIGN_UP_SUCCESS, payload: signupData },
     ]
 
     const store = mockStore({ email: null, token: null })
@@ -81,8 +82,8 @@ describe("async actions", () => {
     mock.onPost(`${ROOT_URL}/users`).reply(500, { error: "Some signup error" })
 
     const expectedActions = [
-      { type: actions.SIGN_UP_REQUEST },
-      { type: actions.SIGN_UP_FAILURE, error: "Some signup error" },
+      { type: types.SIGN_UP_REQUEST },
+      { type: types.SIGN_UP_FAILURE, error: "Some signup error" },
     ]
 
     const store = mockStore({ error: null, token: null, email: null })
@@ -96,8 +97,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.LOG_IN_REQUEST },
-      { type: actions.LOG_IN_SUCCESS, payload: signupData },
+      { type: types.LOG_IN_REQUEST },
+      { type: types.LOG_IN_SUCCESS, payload: signupData },
     ]
 
     const store = mockStore({ email: null, token: null })
@@ -113,8 +114,8 @@ describe("async actions", () => {
       .reply(500, { error: "Some signup error" })
 
     const expectedActions = [
-      { type: actions.LOG_IN_REQUEST },
-      { type: actions.LOG_IN_FAILURE, error: "Some signup error" },
+      { type: types.LOG_IN_REQUEST },
+      { type: types.LOG_IN_FAILURE, error: "Some signup error" },
     ]
 
     const store = mockStore({ error: null, token: null, email: null })
@@ -128,8 +129,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.MAKE_RESERVATION_REQUEST },
-      { type: actions.MAKE_RESERVATION_SUCCESS, payload: reservationData },
+      { type: types.MAKE_RESERVATION_REQUEST },
+      { type: types.MAKE_RESERVATION_SUCCESS, payload: reservationData },
     ]
 
     const store = mockStore({})
@@ -143,8 +144,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.MAKE_RESERVATION_REQUEST },
-      { type: actions.MAKE_RESERVATION_SUCCESS, payload: reservationData },
+      { type: types.MAKE_RESERVATION_REQUEST },
+      { type: types.MAKE_RESERVATION_SUCCESS, payload: reservationData },
     ]
 
     const store = mockStore({})
@@ -158,9 +159,9 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.MAKE_RESERVATION_REQUEST },
+      { type: types.MAKE_RESERVATION_REQUEST },
       {
-        type: actions.MAKE_RESERVATION_FAILURE,
+        type: types.MAKE_RESERVATION_FAILURE,
         error: "Some random reservation error",
       },
     ]
@@ -178,9 +179,9 @@ describe("async actions", () => {
       .reply(500, { error: "Some reservation error" })
 
     const expectedActions = [
-      { type: actions.MAKE_RESERVATION_REQUEST },
+      { type: types.MAKE_RESERVATION_REQUEST },
       {
-        type: actions.MAKE_RESERVATION_FAILURE,
+        type: types.MAKE_RESERVATION_FAILURE,
         error: "Some reservation error",
       },
     ]
@@ -196,8 +197,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.GET_RESERVATION_REQUEST },
-      { type: actions.GET_RESERVATION_SUCCESS, payload: reservationData },
+      { type: types.GET_RESERVATION_REQUEST },
+      { type: types.GET_RESERVATION_SUCCESS, payload: reservationData },
     ]
 
     const store = mockStore({})
@@ -213,9 +214,9 @@ describe("async actions", () => {
       .reply(500, { error: "Some reservation error" })
 
     const expectedActions = [
-      { type: actions.GET_RESERVATION_REQUEST },
+      { type: types.GET_RESERVATION_REQUEST },
       {
-        type: actions.GET_RESERVATION_FAILURE,
+        type: types.GET_RESERVATION_FAILURE,
         error: "Some reservation error",
       },
     ]
@@ -231,8 +232,8 @@ describe("async actions", () => {
     })
 
     const expectedActions = [
-      { type: actions.CANCEL_RESERVATION_REQUEST },
-      { type: actions.CANCEL_RESERVATION_SUCCESS, payload: reservationData },
+      { type: types.CANCEL_RESERVATION_REQUEST },
+      { type: types.CANCEL_RESERVATION_SUCCESS, payload: reservationData },
     ]
 
     const store = mockStore({})
@@ -248,9 +249,9 @@ describe("async actions", () => {
       .reply(500, { error: "Some cancel error" })
 
     const expectedActions = [
-      { type: actions.CANCEL_RESERVATION_REQUEST },
+      { type: types.CANCEL_RESERVATION_REQUEST },
       {
-        type: actions.CANCEL_RESERVATION_FAILURE,
+        type: types.CANCEL_RESERVATION_FAILURE,
         error: "Some cancel error",
       },
     ]

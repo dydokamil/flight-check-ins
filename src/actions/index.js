@@ -1,31 +1,27 @@
 import axios from "axios"
 
-import { ROOT_URL } from "../consts"
+import { ROOT_URL } from "../constants/consts"
+import * as types from "../constants/ActionTypes"
 
 // clean up>
-export const CLEAN_UP = "CLEAN_UP"
 
 export const cleanUp = () => ({
-  type: CLEAN_UP,
+  type: types.CLEAN_UP,
 })
 // <clean up
 
 // fetch seats>
-export const FETCH_SEATS_REQUEST = "FETCH_SEATS_REQUEST"
-export const FETCH_SEATS_SUCCESS = "FETCH_SEATS_SUCCESS"
-export const FETCH_SEATS_FAILURE = "FETCH_SEATS_FAILURE"
-
 export const fetchSeatsRequest = () => ({
-  type: FETCH_SEATS_REQUEST,
+  type: types.FETCH_SEATS_REQUEST,
 })
 
 export const fetchSeatsFailure = (error) => ({
-  type: FETCH_SEATS_FAILURE,
+  type: types.FETCH_SEATS_FAILURE,
   error,
 })
 
 export const fetchSeatsSuccess = (payload) => ({
-  type: FETCH_SEATS_SUCCESS,
+  type: types.FETCH_SEATS_SUCCESS,
   payload,
 })
 
@@ -39,21 +35,17 @@ export const fetchSeats = () => (dispatch) => {
 // <fetch seats
 
 // sign up>
-export const SIGN_UP_REQUEST = "SIGN_UP_REQUEST"
-export const SIGN_UP_SUCCESS = "SIGN_UP_SUCCESS"
-export const SIGN_UP_FAILURE = "SIGN_UP_FAILURE"
-
 export const signUpRequest = () => ({
-  type: SIGN_UP_REQUEST,
+  type: types.SIGN_UP_REQUEST,
 })
 
 export const signUpFailure = (error) => ({
-  type: SIGN_UP_FAILURE,
+  type: types.SIGN_UP_FAILURE,
   error,
 })
 
 export const signUpSuccess = (payload) => ({
-  type: SIGN_UP_SUCCESS,
+  type: types.SIGN_UP_SUCCESS,
   payload,
 })
 
@@ -67,21 +59,17 @@ export const signUp = (payload) => (dispatch) => {
 // <sign up
 
 // log in>
-export const LOG_IN_REQUEST = "LOG_IN_REQUEST"
-export const LOG_IN_SUCCESS = "LOG_IN_SUCCESS"
-export const LOG_IN_FAILURE = "LOG_IN_FAILURE"
-
 export const logInRequest = () => ({
-  type: LOG_IN_REQUEST,
+  type: types.LOG_IN_REQUEST,
 })
 
 export const logInFailure = (error) => ({
-  type: LOG_IN_FAILURE,
+  type: types.LOG_IN_FAILURE,
   error,
 })
 
 export const logInSuccess = (payload) => ({
-  type: LOG_IN_SUCCESS,
+  type: types.LOG_IN_SUCCESS,
   payload,
 })
 
@@ -94,29 +82,23 @@ export const logIn = (payload) => (dispatch) => {
 }
 
 // log out>
-export const LOG_OUT = "LOG_OUT"
-
 export const logOut = () => ({
-  type: LOG_OUT,
+  type: types.LOG_OUT,
 })
 // <log out
 
 // make reservation>
-export const MAKE_RESERVATION_REQUEST = "MAKE_RESERVATION_REQUEST"
-export const MAKE_RESERVATION_SUCCESS = "MAKE_RESERVATION_SUCCESS"
-export const MAKE_RESERVATION_FAILURE = "MAKE_RESERVATION_FAILURE"
-
 export const makeReservationRequest = () => ({
-  type: MAKE_RESERVATION_REQUEST,
+  type: types.MAKE_RESERVATION_REQUEST,
 })
 
 export const makeReservationSuccess = (payload) => ({
-  type: MAKE_RESERVATION_SUCCESS,
+  type: types.MAKE_RESERVATION_SUCCESS,
   payload,
 })
 
 export const makeReservationFailure = (error) => ({
-  type: MAKE_RESERVATION_FAILURE,
+  type: types.MAKE_RESERVATION_FAILURE,
   error,
 })
 
@@ -139,21 +121,17 @@ export const makeRandomReservation = (payload) => (dispatch) => {
 // <make reservation
 
 // get reservations>
-export const GET_RESERVATION_REQUEST = "GET_RESERVATION_REQUEST"
-export const GET_RESERVATION_SUCCESS = "GET_RESERVATION_SUCCESS"
-export const GET_RESERVATION_FAILURE = "GET_RESERVATION_FAILURE"
-
 export const getReservationRequest = () => ({
-  type: GET_RESERVATION_REQUEST,
+  type: types.GET_RESERVATION_REQUEST,
 })
 
 export const getReservationSuccess = (payload) => ({
-  type: GET_RESERVATION_SUCCESS,
+  type: types.GET_RESERVATION_SUCCESS,
   payload,
 })
 
 export const getReservationFailure = (error) => ({
-  type: GET_RESERVATION_FAILURE,
+  type: types.GET_RESERVATION_FAILURE,
   error,
 })
 
@@ -168,21 +146,17 @@ export const getReservation = (payload) => (dispatch) => {
 // <get reservations
 
 // cancel reservation>
-export const CANCEL_RESERVATION_REQUEST = "CANCEL_RESERVATION_REQUEST"
-export const CANCEL_RESERVATION_SUCCESS = "CANCEL_RESERVATION_SUCCESS"
-export const CANCEL_RESERVATION_FAILURE = "CANCEL_RESERVATION_FAILURE"
-
 export const cancelReservationRequest = () => ({
-  type: CANCEL_RESERVATION_REQUEST,
+  type: types.CANCEL_RESERVATION_REQUEST,
 })
 
 export const cancelReservationSuccess = (payload) => ({
-  type: CANCEL_RESERVATION_SUCCESS,
+  type: types.CANCEL_RESERVATION_SUCCESS,
   payload,
 })
 
 export const cancelReservationFailure = (error) => ({
-  type: CANCEL_RESERVATION_FAILURE,
+  type: types.CANCEL_RESERVATION_FAILURE,
   error,
 })
 
