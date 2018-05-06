@@ -1,21 +1,18 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap"
 import { connect } from "react-redux"
 
 import * as actions from "../actions"
 import "./Seat.css"
 
-class Seat extends React.Component {
+export class Seat extends React.Component {
   state = {
     popoverOpen: false,
     id: this.props.seat.id,
   }
 
-  componentDidMount = () => {
-    this.setState({ canBook: !this.props.madeReservation })
-  }
-
-  toggle = () => {
+  toggle = (event) => {
     this.setState({ popoverOpen: !this.state.popoverOpen })
   }
 
@@ -33,7 +30,7 @@ class Seat extends React.Component {
       <React.Fragment>
         <Button
           className="seat"
-          onClick={this.toggle}
+          onClick={(event) => this.toggle(event)}
           id={`Popover${seat.id}`}
           disabled={!seat.available}
         >
@@ -43,7 +40,7 @@ class Seat extends React.Component {
           placement="bottom"
           isOpen={this.state.popoverOpen}
           target={`Popover${seat.id}`}
-          toggle={this.toggle}
+          toggle={(event) => this.toggle(event)}
         >
           <PopoverHeader>Seat {seat.id}</PopoverHeader>
           <PopoverBody>
@@ -57,7 +54,6 @@ class Seat extends React.Component {
             </div>
             <div>
               <Button
-                // disabled={this.props.madeReservation}
                 disabled={!this.props.token}
                 onClick={this.bookSeat}
                 color="success"
@@ -72,14 +68,19 @@ class Seat extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  onBookSeat: payload => {
-    dispatch(actions.makeReservation(payload))
-  },
+Seat.propTypes = {
+  seat: PropTypes.object,
+  checkInFee: PropTypes.number,
+  basePrice: PropTypes.number,
+  onBookSeat: PropTypes.func,
+  sessionReducer: PropTypes.object,
+}
+
+export const mapDispatchToProps = (dispatch) => ({
+  onBookSeat: (payload) => dispatch(actions.makeReservation(payload)),
 })
 
-const mapStateToProps = state => ({
-  // madeReservation: state.seatsReducer.madeReservation,
+export const mapStateToProps = (state) => ({
   token: state.sessionReducer.token,
   email: state.sessionReducer.email,
 })

@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { connect } from "react-redux"
 import { Button } from "reactstrap"
 import { Container, Row, Col, Alert } from "reactstrap"
@@ -22,15 +23,9 @@ export const convertTo2D = (seats) => {
   return rows
 }
 
-class Seats extends React.Component {
+export class Seats extends React.Component {
   componentDidMount() {
     this.props.fetchSeats()
-  }
-
-  toggle = () => {
-    this.setState({
-      popoverOpen: !this.state.popoverOpen,
-    })
   }
 
   bookRandomSeat = () => {
@@ -101,14 +96,22 @@ class Seats extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+Seats.propTypes = {
+  fetchSeats: PropTypes.func,
+  onRandomReservation: PropTypes.func,
+  token: PropTypes.string,
+  reservationError: PropTypes.string,
+  seatsReducer: PropTypes.object,
+}
+
+export const mapStateToProps = (state) => ({
   seatsReducer: state.seatsReducer,
   token: state.sessionReducer.token,
 
   reservationError: state.reservationReducer.error,
 })
 
-const mapDispatchToProps = (dispatch) => ({
+export const mapDispatchToProps = (dispatch) => ({
   fetchSeats: () => dispatch(actions.fetchSeats()),
   onRandomReservation: (payload) =>
     dispatch(actions.makeRandomReservation(payload)),

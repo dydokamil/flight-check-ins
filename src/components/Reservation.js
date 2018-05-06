@@ -1,11 +1,12 @@
 import React from "react"
+import PropTypes from "prop-types"
 import { Container } from "reactstrap"
 import { connect } from "react-redux"
 import { Button } from "reactstrap"
 
 import * as actions from "../actions"
 
-class Reservation extends React.Component {
+export class Reservation extends React.Component {
   state = { seatId: null }
 
   componentDidMount = () => {
@@ -32,7 +33,11 @@ class Reservation extends React.Component {
             <div>Price: ${price}</div>
             <div>Paid: {paid ? "Yes" : "No"}</div>
             <div>Reserved until: {reservedUntil}</div>
-            <Button onClick={this.cancelReservation} color="danger">
+            <Button
+              id="cancelButton"
+              onClick={() => this.cancelReservation()}
+              color="danger"
+            >
               Cancel Reservation
             </Button>
           </div>
@@ -42,7 +47,17 @@ class Reservation extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
+Reservation.propTypes = {
+  email: PropTypes.string,
+  token: PropTypes.string,
+  paid: PropTypes.bool,
+  price: PropTypes.number,
+  reservedUntil: PropTypes.instanceOf(Date),
+  seat: PropTypes.object,
+  onGetReservation: PropTypes.func,
+}
+
+export const mapStateToProps = (state) => ({
   email: state.sessionReducer.email,
   token: state.sessionReducer.token,
 
@@ -52,9 +67,10 @@ const mapStateToProps = state => ({
   seat: state.reservationReducer.seat,
 })
 
-const mapDispatchToProps = dispatch => ({
-  onGetReservation: payload => dispatch(actions.getReservation(payload)),
-  onCancelReservation: payload => dispatch(actions.cancelReservation(payload)),
+export const mapDispatchToProps = (dispatch) => ({
+  onGetReservation: (payload) => dispatch(actions.getReservation(payload)),
+  onCancelReservation: (payload) =>
+    dispatch(actions.cancelReservation(payload)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Reservation)

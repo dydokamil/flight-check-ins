@@ -1,4 +1,5 @@
 import React from "react"
+import PropTypes from "prop-types"
 import {
   Card,
   Container,
@@ -74,6 +75,11 @@ export class LogIn extends React.Component {
       </Container>
     )
   }
+}
+
+LogIn.propTypes = {
+  onLogIn: PropTypes.func,
+  sessionReducer: PropTypes.object,
 }
 
 export const mapStateToProps = (state) => ({
