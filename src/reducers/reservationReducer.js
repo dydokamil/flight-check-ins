@@ -2,6 +2,7 @@ import * as types from "../constants/ActionTypes"
 
 const INITIAL_STATE = {
   error: null,
+  loading: false,
   reservedUntil: null,
   paid: null,
   price: null,
@@ -9,11 +10,16 @@ const INITIAL_STATE = {
 
 const reservationReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case types.MAKE_RESERVATION_REQUEST:
+    case types.CANCEL_RESERVATION_REQUEST:
+      return { ...state, loading: true }
+
     case types.MAKE_RESERVATION_SUCCESS:
     case types.GET_RESERVATION_SUCCESS:
       return {
         error: null,
         ...action.payload,
+        loading: false,
       }
 
     case types.MAKE_RESERVATION_FAILURE:
@@ -21,6 +27,7 @@ const reservationReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         error: action.error,
+        loading: false,
       }
 
     case types.CANCEL_RESERVATION_SUCCESS:
