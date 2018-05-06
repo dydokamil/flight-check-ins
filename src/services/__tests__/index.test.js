@@ -1,6 +1,12 @@
 import * as actions from "../../actions"
 
 describe("Fetch seats action creators", () => {
+  it("should create an action for a cleanup", () => {
+    const expectedAction = { type: actions.CLEAN_UP }
+
+    expect(actions.cleanUp()).toEqual(expectedAction)
+  })
+
   it("should create an action for a successful seats fetch", () => {
     const data = ["seat1", "seat2"]
     const expectedAction = {
