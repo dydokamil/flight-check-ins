@@ -1,3 +1,11 @@
 {
-    "extends": "standard"
+  "parser": "babel-eslint",
+  "extends": ["standard", "plugin:react/recommended"],
+  "rules": {
+    "comma-dangle": [2, "always-multiline"]
+  },
+  "env": {
+    "es6": true,
+    "jest": true
+  }
 }

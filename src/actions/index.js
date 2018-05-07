@@ -1,7 +1,7 @@
-import axios from "axios"
+import axios from 'axios'
 
-import { ROOT_URL } from "../constants/consts"
-import * as types from "../constants/ActionTypes"
+import { ROOT_URL } from '../constants/consts'
+import * as types from '../constants/ActionTypes'
 
 // clean up>
 export const cleanUp = () => ({

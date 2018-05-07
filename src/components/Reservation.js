@@ -1,10 +1,9 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { Container } from "reactstrap"
-import { connect } from "react-redux"
-import { Button } from "reactstrap"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Container, Button } from 'reactstrap'
+import { connect } from 'react-redux'
 
-import * as actions from "../actions"
+import * as actions from '../actions'
 
 export class Reservation extends React.Component {
   state = { seatId: null }
@@ -19,7 +18,7 @@ export class Reservation extends React.Component {
     this.props.onCancelReservation({ token: this.props.token })
   }
 
-  render() {
+  render () {
     const { paid, price, reservedUntil, seat } = this.props
 
     return (
@@ -31,7 +30,7 @@ export class Reservation extends React.Component {
           <div>
             <div>Your seat: {seat.id}</div>
             <div>Price: ${price}</div>
-            <div>Paid: {paid ? "Yes" : "No"}</div>
+            <div>Paid: {paid ? 'Yes' : 'No'}</div>
             <div>Reserved until: {reservedUntil}</div>
             <Button
               id="cancelButton"
@@ -55,6 +54,7 @@ Reservation.propTypes = {
   reservedUntil: PropTypes.instanceOf(Date),
   seat: PropTypes.object,
   onGetReservation: PropTypes.func,
+  onCancelReservation: PropTypes.func,
 }
 
 export const mapStateToProps = (state) => ({

@@ -1,8 +1,8 @@
-import reducer from "../../reducers/seatsReducer"
-import * as types from "../../constants/ActionTypes"
-import seatsData from "../../__mockData__/seats.json"
+import reducer from '../../reducers/seatsReducer'
+import * as types from '../../constants/ActionTypes'
+import seatsData from '../../__mockData__/seats.json'
 
-describe("seats reducer", () => {
+describe('seats reducer', () => {
   const INITIAL_STATE = {
     loading: false,
     seats: null,
@@ -27,14 +27,14 @@ describe("seats reducer", () => {
   const FAILURE_STATE = {
     ...LOADING_STATE,
     loading: false,
-    error: "Some error",
+    error: 'Some error',
   }
 
-  it("should return the initial state", () => {
+  it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(INITIAL_STATE)
   })
 
-  it("should return loading state", () => {
+  it('should return loading state', () => {
     expect(
       reducer(INITIAL_STATE, {
         type: types.FETCH_SEATS_REQUEST,
@@ -42,7 +42,7 @@ describe("seats reducer", () => {
     ).toEqual(LOADING_STATE)
   })
 
-  it("should return success state", () => {
+  it('should return success state', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.FETCH_SEATS_SUCCESS,
@@ -51,16 +51,16 @@ describe("seats reducer", () => {
     ).toEqual(SUCCESS_STATE)
   })
 
-  it("should return failure state", () => {
+  it('should return failure state', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.FETCH_SEATS_FAILURE,
-        error: "Some error",
+        error: 'Some error',
       }),
     ).toEqual(FAILURE_STATE)
   })
 
-  it("should return available `false` on one of the seats", () => {
+  it('should return available `false` on one of the seats', () => {
     expect(
       reducer(seatsData, {
         type: types.MAKE_RESERVATION_SUCCESS,

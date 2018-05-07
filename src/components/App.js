@@ -1,12 +1,12 @@
-import React, { Component } from "react"
-import { Container, Row, Col } from "reactstrap"
+import React, { Component } from 'react'
+import { Container } from 'reactstrap'
 
-import Seats from "./Seats"
-import Navbar from "./Navbar"
-import "./App.css"
+import Seats from './Seats'
+import Navbar from './Navbar'
+import './App.css'
 
 class App extends Component {
-  render() {
+  render () {
     return (
       <Container>
         <Navbar />

@@ -1,17 +1,17 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react'
+import PropTypes from 'prop-types'
 
-import { Link } from "react-router-dom"
-import "./Navbar.css"
-import { connect } from "react-redux"
-import * as actions from "../actions"
+import { Link } from 'react-router-dom'
+import './Navbar.css'
+import { connect } from 'react-redux'
+import * as actions from '../actions'
 
 export class Navbar extends React.Component {
   logOut = () => {
     this.props.onLogOut()
   }
 
-  render() {
+  render () {
     const { email } = this.props
     return (
       <div className="myNavbar">

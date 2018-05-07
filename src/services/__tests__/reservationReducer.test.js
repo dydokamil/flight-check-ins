@@ -1,8 +1,7 @@
-import reducer from "../../reducers/reservationReducer"
-import * as types from "../../constants/ActionTypes"
-// import seatsData from "../../__mockData__/seats.json"
+import reducer from '../../reducers/reservationReducer'
+import * as types from '../../constants/ActionTypes'
 
-describe("reservation reducer", () => {
+describe('reservation reducer', () => {
   const INITIAL_STATE = {
     error: null,
     loading: false,
@@ -27,26 +26,26 @@ describe("reservation reducer", () => {
   const FAILURE_STATE = {
     ...LOADING_STATE,
     loading: false,
-    error: "Some error",
+    error: 'Some error',
   }
 
-  it("should return the initial state", () => {
+  it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual(INITIAL_STATE)
   })
 
-  it("should return loading state", () => {
+  it('should return loading state', () => {
     expect(
       reducer(INITIAL_STATE, { type: types.MAKE_RESERVATION_REQUEST }),
     ).toEqual(LOADING_STATE)
   })
 
-  it("should return loading state", () => {
+  it('should return loading state', () => {
     expect(
       reducer(INITIAL_STATE, { type: types.CANCEL_RESERVATION_REQUEST }),
     ).toEqual(LOADING_STATE)
   })
 
-  it("should return success state for when making a reservation", () => {
+  it('should return success state for when making a reservation', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.MAKE_RESERVATION_SUCCESS,
@@ -55,7 +54,7 @@ describe("reservation reducer", () => {
     ).toEqual(SUCCESS_STATE)
   })
 
-  it("should return success state for when getting a reservation", () => {
+  it('should return success state for when getting a reservation', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.GET_RESERVATION_SUCCESS,
@@ -64,34 +63,34 @@ describe("reservation reducer", () => {
     ).toEqual(SUCCESS_STATE)
   })
 
-  it("should return failure state for when making a reservation", () => {
+  it('should return failure state for when making a reservation', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.MAKE_RESERVATION_FAILURE,
-        error: "Some error",
+        error: 'Some error',
       }),
     ).toEqual(FAILURE_STATE)
   })
 
-  it("should return failure state for when getting a reservation", () => {
+  it('should return failure state for when getting a reservation', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.GET_RESERVATION_FAILURE,
-        error: "Some error",
+        error: 'Some error',
       }),
     ).toEqual(FAILURE_STATE)
   })
 
-  it("should return failure state for when getting a reservation", () => {
+  it('should return failure state for when getting a reservation', () => {
     expect(
       reducer(LOADING_STATE, {
         type: types.GET_RESERVATION_FAILURE,
-        error: "Some error",
+        error: 'Some error',
       }),
     ).toEqual(FAILURE_STATE)
   })
 
-  it("should return initial state for when cancelling a reservation", () => {
+  it('should return initial state for when cancelling a reservation', () => {
     expect(
       reducer(SUCCESS_STATE, {
         type: types.CANCEL_RESERVATION_SUCCESS,
@@ -99,7 +98,7 @@ describe("reservation reducer", () => {
     ).toEqual(INITIAL_STATE)
   })
 
-  it("should return initial state for when cleaning up", () => {
+  it('should return initial state for when cleaning up', () => {
     expect(
       reducer(SUCCESS_STATE, {
         type: types.CLEAN_UP,

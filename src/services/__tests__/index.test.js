@@ -1,15 +1,15 @@
-import * as actions from "../../actions"
-import * as types from "../../constants/ActionTypes"
+import * as actions from '../../actions'
+import * as types from '../../constants/ActionTypes'
 
-describe("Fetch seats action creators", () => {
-  it("should create an action for a cleanup", () => {
+describe('Fetch seats action creators', () => {
+  it('should create an action for a cleanup', () => {
     const expectedAction = { type: types.CLEAN_UP }
 
     expect(actions.cleanUp()).toEqual(expectedAction)
   })
 
-  it("should create an action for a successful seats fetch", () => {
-    const data = ["seat1", "seat2"]
+  it('should create an action for a successful seats fetch', () => {
+    const data = ['seat1', 'seat2']
     const expectedAction = {
       type: types.FETCH_SEATS_SUCCESS,
       payload: data,
@@ -17,8 +17,8 @@ describe("Fetch seats action creators", () => {
     expect(actions.fetchSeatsSuccess(data)).toEqual(expectedAction)
   })
 
-  it("should create an action for an unsuccessful seats fetch", () => {
-    const error = new Error("Some error")
+  it('should create an action for an unsuccessful seats fetch', () => {
+    const error = new Error('Some error')
     const expectedAction = {
       type: types.FETCH_SEATS_FAILURE,
       error,
@@ -27,9 +27,9 @@ describe("Fetch seats action creators", () => {
   })
 })
 
-describe("Sign up action creators", () => {
-  it("should create an action for a successful signup", () => {
-    const data = { email: "Someone", password: "test" }
+describe('Sign up action creators', () => {
+  it('should create an action for a successful signup', () => {
+    const data = { email: 'Someone', password: 'test' }
     const expectedAction = {
       type: types.SIGN_UP_SUCCESS,
       payload: data,
@@ -37,8 +37,8 @@ describe("Sign up action creators", () => {
     expect(actions.signUpSuccess(data)).toEqual(expectedAction)
   })
 
-  it("should create an action for an unsuccessful signup", () => {
-    const error = new Error("Some error")
+  it('should create an action for an unsuccessful signup', () => {
+    const error = new Error('Some error')
     const expectedAction = {
       type: types.SIGN_UP_FAILURE,
       error,
@@ -47,9 +47,9 @@ describe("Sign up action creators", () => {
   })
 })
 
-describe("Log in action creators", () => {
-  it("should create an action for a successful login", () => {
-    const data = { email: "Someone", password: "test" }
+describe('Log in action creators', () => {
+  it('should create an action for a successful login', () => {
+    const data = { email: 'Someone', password: 'test' }
     const expectedAction = {
       type: types.LOG_IN_SUCCESS,
       payload: data,
@@ -57,8 +57,8 @@ describe("Log in action creators", () => {
     expect(actions.logInSuccess(data)).toEqual(expectedAction)
   })
 
-  it("should create an action for an unsuccessful login", () => {
-    const error = new Error("Some error")
+  it('should create an action for an unsuccessful login', () => {
+    const error = new Error('Some error')
     const expectedAction = {
       type: types.LOG_IN_FAILURE,
       error,
@@ -67,8 +67,8 @@ describe("Log in action creators", () => {
   })
 })
 
-describe("Log out action creator", () => {
-  it("should create an action for a successful login", () => {
+describe('Log out action creator', () => {
+  it('should create an action for a successful login', () => {
     const expectedAction = {
       type: types.LOG_OUT,
     }
@@ -76,9 +76,9 @@ describe("Log out action creator", () => {
   })
 })
 
-describe("Make reservation action creators", () => {
-  it("should create an action for a successful reservation", () => {
-    const data = { id: "Someone", price: 50 }
+describe('Make reservation action creators', () => {
+  it('should create an action for a successful reservation', () => {
+    const data = { id: 'Someone', price: 50 }
     const expectedAction = {
       type: types.MAKE_RESERVATION_SUCCESS,
       payload: data,
@@ -86,8 +86,8 @@ describe("Make reservation action creators", () => {
     expect(actions.makeReservationSuccess(data)).toEqual(expectedAction)
   })
 
-  it("should create an action for an unsuccessful reservation", () => {
-    const error = new Error("Some error")
+  it('should create an action for an unsuccessful reservation', () => {
+    const error = new Error('Some error')
     const expectedAction = {
       type: types.MAKE_RESERVATION_FAILURE,
       error,
@@ -96,9 +96,9 @@ describe("Make reservation action creators", () => {
   })
 })
 
-describe("Get reservation action creators", () => {
-  it("should create an action for a successful reservation retrieval", () => {
-    const data = { id: "Someone", price: 50 }
+describe('Get reservation action creators', () => {
+  it('should create an action for a successful reservation retrieval', () => {
+    const data = { id: 'Someone', price: 50 }
     const expectedAction = {
       type: types.GET_RESERVATION_SUCCESS,
       payload: data,
@@ -106,8 +106,8 @@ describe("Get reservation action creators", () => {
     expect(actions.getReservationSuccess(data)).toEqual(expectedAction)
   })
 
-  it("should create an action for an unsuccessful reservation retrieval", () => {
-    const error = new Error("Some error")
+  it('should create an action for an unsuccessful reservation retrieval', () => {
+    const error = new Error('Some error')
     const expectedAction = {
       type: types.GET_RESERVATION_FAILURE,
       error,
@@ -116,9 +116,9 @@ describe("Get reservation action creators", () => {
   })
 })
 
-describe("Cancel reservation action creators", () => {
-  it("should create an action for a successful reservation cancelation", () => {
-    const data = { id: "Someone", price: 50 }
+describe('Cancel reservation action creators', () => {
+  it('should create an action for a successful reservation cancelation', () => {
+    const data = { id: 'Someone', price: 50 }
     const expectedAction = {
       type: types.CANCEL_RESERVATION_SUCCESS,
       payload: data,
@@ -126,8 +126,8 @@ describe("Cancel reservation action creators", () => {
     expect(actions.cancelReservationSuccess(data)).toEqual(expectedAction)
   })
 
-  it("should create an action for an unsuccessful reservation cancelation", () => {
-    const error = new Error("Some error")
+  it('should create an action for an unsuccessful reservation cancelation', () => {
+    const error = new Error('Some error')
     const expectedAction = {
       type: types.CANCEL_RESERVATION_FAILURE,
       error,

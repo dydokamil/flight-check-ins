@@ -1,3 +1,4 @@
-import React from "react"
+import React from 'react'
 
-export default () => <div>Page not found.</div>
+const NotFound = () => <div>Page not found.</div>
+export default NotFound

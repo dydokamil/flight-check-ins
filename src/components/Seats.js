@@ -1,13 +1,12 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
-import { Button } from "reactstrap"
-import { Container, Row, Col, Alert } from "reactstrap"
-import { RotateLoader } from "react-spinners"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import { Container, Row, Col, Alert, Button } from 'reactstrap'
+import { RotateLoader } from 'react-spinners'
 
-import Seat from "./Seat"
-import "./Seats.css"
-import * as actions from "../actions"
+import Seat from './Seat'
+import './Seats.css'
+import * as actions from '../actions'
 
 export const convertTo2D = (seats) => {
   let rows = []
@@ -24,7 +23,7 @@ export const convertTo2D = (seats) => {
 }
 
 export class Seats extends React.Component {
-  componentDidMount() {
+  componentDidMount () {
     this.props.fetchSeats()
   }
 
@@ -34,7 +33,7 @@ export class Seats extends React.Component {
     this.props.onRandomReservation({ token })
   }
 
-  render() {
+  render () {
     const { seatsReducer } = this.props
     const { basePrice, checkInFee } = seatsReducer
 
@@ -44,7 +43,7 @@ export class Seats extends React.Component {
     if (seatsReducer.loading) {
       return (
         <div className="centered-div">
-          <RotateLoader color={"#123abc"} />
+          <RotateLoader color={'#123abc'} />
         </div>
       )
     }
@@ -64,7 +63,7 @@ export class Seats extends React.Component {
               <div
                 key={`side${idx}`}
                 className={`${
-                  idx ? "right-aligned-container" : "left-aligned-container"
+                  idx ? 'right-aligned-container' : 'left-aligned-container'
                 }`}
               >
                 {seatsSide.map((seat) => (
@@ -81,7 +80,7 @@ export class Seats extends React.Component {
           </div>
         ))}
         <Row>
-          <Col style={{ marginTop: "1rem" }}>
+          <Col style={{ marginTop: '1rem' }}>
             <Button
               disabled={!this.props.token}
               onClick={this.bookRandomSeat}

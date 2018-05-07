@@ -7,19 +7,13 @@
 
 .left-aligned-container {
   display: flex;
-  /* align-items: flex-start; */
-  /* align-content: flex-start; */
 }
 
 .right-aligned-container {
   display: flex;
-  /* align-content: flex-end; */
-  /* align-items: flex-end; */
-  /* justify-content: space-between; */
 }
 
 .centered-div {
-  /* text-align: center; */
   position: absolute;
   left: 50%;
   top: 50%;

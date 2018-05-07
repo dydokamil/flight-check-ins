@@ -1,5 +1,5 @@
-import React from "react"
-import PropTypes from "prop-types"
+import React from 'react'
+import PropTypes from 'prop-types'
 import {
   Card,
   Container,
@@ -10,13 +10,13 @@ import {
   CardBody,
   Button,
   Alert,
-} from "reactstrap"
-import { connect } from "react-redux"
+} from 'reactstrap'
+import { connect } from 'react-redux'
 
-import * as actions from "../actions"
+import * as actions from '../actions'
 
 export class LogIn extends React.Component {
-  state = { email: "", password: "" }
+  state = { email: '', password: '' }
 
   componentDidMount = () => {
     this.props.onCleanUpLoginError()
@@ -27,10 +27,10 @@ export class LogIn extends React.Component {
     this.props.onLogIn(this.state)
   }
 
-  render() {
+  render () {
     const { email, error } = this.props.sessionReducer
 
-    if (email) this.props.history.push("/")
+    if (email) this.props.history.push('/')
     return (
       <Container>
         <Card>
@@ -72,7 +72,7 @@ export class LogIn extends React.Component {
           </CardBody>
         </Card>
         {error && (
-          <Alert style={{ marginTop: "1rem" }} color="danger">
+          <Alert style={{ marginTop: '1rem' }} color="danger">
             {error}
           </Alert>
         )}
@@ -84,6 +84,8 @@ export class LogIn extends React.Component {
 LogIn.propTypes = {
   onLogIn: PropTypes.func,
   sessionReducer: PropTypes.object,
+  history: PropTypes.object,
+  onCleanUpLoginError: PropTypes.func,
 }
 
 export const mapStateToProps = (state) => ({

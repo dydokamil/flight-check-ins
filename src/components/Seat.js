@@ -1,10 +1,10 @@
-import React from "react"
-import PropTypes from "prop-types"
-import { Button, Popover, PopoverHeader, PopoverBody } from "reactstrap"
-import { connect } from "react-redux"
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap'
+import { connect } from 'react-redux'
 
-import * as actions from "../actions"
-import "./Seat.css"
+import * as actions from '../actions'
+import './Seat.css'
 
 export class Seat extends React.Component {
   state = {
@@ -23,7 +23,7 @@ export class Seat extends React.Component {
     this.setState({ popoverOpen: false })
   }
 
-  render() {
+  render () {
     const { seat } = this.props
 
     return (
@@ -74,6 +74,7 @@ Seat.propTypes = {
   basePrice: PropTypes.number,
   onBookSeat: PropTypes.func,
   sessionReducer: PropTypes.object,
+  token: PropTypes.string,
 }
 
 export const mapDispatchToProps = (dispatch) => ({
