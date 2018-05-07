@@ -88,4 +88,12 @@ describe("session reducer", () => {
       }),
     ).toEqual(INITIAL_STATE)
   })
+
+  it("should clean up the login error", () => {
+    expect(
+      reducer(FAILURE_STATE, {
+        type: types.CLEAN_UP_LOGIN_ERROR,
+      }),
+    ).toEqual({ ...FAILURE_STATE, error: null })
+  })
 })

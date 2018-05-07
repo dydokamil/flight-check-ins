@@ -17,6 +17,10 @@ import * as actions from "../actions"
 
 export class LogIn extends React.Component {
   state = { email: "", password: "" }
+
+  componentDidMount = () => {
+    this.props.onCleanUpLoginError()
+  }
   submitLogin = (event) => {
     event.preventDefault()
 
@@ -88,6 +92,7 @@ export const mapStateToProps = (state) => ({
 
 export const mapDispatchToProps = (dispatch) => ({
   onLogIn: (payload) => dispatch(actions.logIn(payload)),
+  onCleanUpLoginError: () => dispatch(actions.cleanUpLoginError()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LogIn)

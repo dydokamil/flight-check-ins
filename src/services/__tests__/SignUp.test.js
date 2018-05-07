@@ -15,10 +15,17 @@ import {
 Enzyme.configure({ adapter: new Adapter() })
 
 describe("test SignUp component", () => {
+  const INITIAL_STATE = {
+    sessionReducer: {
+      email: "",
+      error: null,
+    },
+    onCleanUpLoginError: jest.fn(),
+    onSignUp: jest.fn(),
+  }
+
   it("should change the state of `password` when typing into the input", () => {
-    const component = shallow(
-      <SignUp sessionReducer={{ email: "", error: null }} />,
-    )
+    const component = shallow(<SignUp {...INITIAL_STATE} />)
     const instance = component.instance()
     const password = "Passwd!@#"
 
@@ -31,12 +38,7 @@ describe("test SignUp component", () => {
   it("should call submitSignup when `Sign Up` button is pressed", () => {
     const submitSignUpMock = jest.fn()
 
-    let wrapper = shallow(
-      <SignUp
-        sessionReducer={{ email: "", error: null }}
-        onSignUp={jest.fn()}
-      />,
-    )
+    let wrapper = shallow(<SignUp {...INITIAL_STATE} />)
     wrapper.instance().submitSignUp = submitSignUpMock
 
     const signupButton = wrapper
@@ -49,12 +51,7 @@ describe("test SignUp component", () => {
   it("should call submitSignup when `Sign Up` button is pressed", () => {
     const preventDefaultMock = jest.fn()
 
-    let wrapper = shallow(
-      <SignUp
-        sessionReducer={{ email: "", error: null }}
-        onSignUp={jest.fn()}
-      />,
-    )
+    let wrapper = shallow(<SignUp {...INITIAL_STATE} />)
 
     const signupButton = wrapper
       .find("#signupButton")
@@ -64,9 +61,7 @@ describe("test SignUp component", () => {
   })
 
   it("should change the state of `email` when typing into the input", () => {
-    const component = shallow(
-      <SignUp sessionReducer={{ email: "", error: null }} />,
-    )
+    const component = shallow(<SignUp {...INITIAL_STATE} />)
     const instance = component.instance()
     const email = "john@doe.com"
 
@@ -84,6 +79,12 @@ describe("test SignUp component", () => {
   it("should call `onSignUp` when signup button is clicked", () => {
     const dispatch = jest.fn()
     mapDispatchToProps(dispatch).onSignUp("john@doe.com", "test123")
+    expect(dispatch).toHaveBeenCalledTimes(1)
+  })
+
+  it("should call `onCleanUpLoginError` when error was scheduled for deletion", () => {
+    const dispatch = jest.fn()
+    mapDispatchToProps(dispatch).onCleanUpLoginError()
     expect(dispatch).toHaveBeenCalledTimes(1)
   })
 })

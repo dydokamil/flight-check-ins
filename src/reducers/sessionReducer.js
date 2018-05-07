@@ -22,6 +22,9 @@ export default (state = INITIAL_STATE, action) => {
     case types.LOG_IN_FAILURE:
       return { ...state, error: action.error, loading: false }
 
+    case types.CLEAN_UP_LOGIN_ERROR:
+      return { ...state, error: null }
+
     case types.LOG_OUT:
       return INITIAL_STATE
 

@@ -15,10 +15,17 @@ import {
 Enzyme.configure({ adapter: new Adapter() })
 
 describe("test login component", () => {
+  const INITIAL_STATE = {
+    sessionReducer: {
+      email: "",
+      error: null,
+    },
+    onCleanUpLoginError: jest.fn(),
+    onLogIn: jest.fn(),
+  }
+
   it("should change the state of `password` when typing into the input", () => {
-    const component = shallow(
-      <LogIn sessionReducer={{ email: "", error: null }} />,
-    )
+    const component = shallow(<LogIn {...INITIAL_STATE} />)
     const instance = component.instance()
     const password = "Passwd!@#"
 
@@ -31,9 +38,7 @@ describe("test login component", () => {
   it("should call submitLogin when `Log In` button is pressed", () => {
     const submitLoginMock = jest.fn()
 
-    let wrapper = shallow(
-      <LogIn sessionReducer={{ email: "", error: null }} onLogIn={jest.fn()} />,
-    )
+    let wrapper = shallow(<LogIn {...INITIAL_STATE} />)
     wrapper.instance().submitLogin = submitLoginMock
 
     const logInButton = wrapper
@@ -46,9 +51,7 @@ describe("test login component", () => {
   it("should call submitLogin when `Log In` button is pressed", () => {
     const preventDefaultMock = jest.fn()
 
-    let wrapper = shallow(
-      <LogIn sessionReducer={{ email: "", error: null }} onLogIn={jest.fn()} />,
-    )
+    let wrapper = shallow(<LogIn {...INITIAL_STATE} />)
 
     const logInButton = wrapper
       .find("#loginButton")
@@ -58,9 +61,7 @@ describe("test login component", () => {
   })
 
   it("should change the state of `email` when typing into the input", () => {
-    const component = shallow(
-      <LogIn sessionReducer={{ email: "", error: null }} />,
-    )
+    const component = shallow(<LogIn {...INITIAL_STATE} />)
     const instance = component.instance()
     const email = "john@doe.com"
 
@@ -78,6 +79,12 @@ describe("test login component", () => {
   it("should call `onLogIn` when login button is clicked", () => {
     const dispatch = jest.fn()
     mapDispatchToProps(dispatch).onLogIn()
+    expect(dispatch).toHaveBeenCalledTimes(1)
+  })
+
+  it("should call `onCleanUpLoginError` when error was scheduled for deletion", () => {
+    const dispatch = jest.fn()
+    mapDispatchToProps(dispatch).onCleanUpLoginError()
     expect(dispatch).toHaveBeenCalledTimes(1)
   })
 })

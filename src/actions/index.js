@@ -4,9 +4,11 @@ import { ROOT_URL } from "../constants/consts"
 import * as types from "../constants/ActionTypes"
 
 // clean up>
-
 export const cleanUp = () => ({
   type: types.CLEAN_UP,
+})
+export const cleanUpLoginError = () => ({
+  type: types.CLEAN_UP_LOGIN_ERROR,
 })
 // <clean up
 
