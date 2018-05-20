@@ -10,3 +10,7 @@
 ## View reservation
 
 ![View reservation](https://github.com/dydokamil/flight-check-ins/blob/master/showcase/reservation.png)
+
+## Coverage
+
+![Coverage](https://github.com/dydokamil/flight-check-ins/blob/master/showcase/coverage.png)
