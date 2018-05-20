@@ -5,7 +5,6 @@
     "comma-dangle": [2, "always-multiline"]
   },
   "env": {
-    "es6": true,
     "jest": true
   }
 }

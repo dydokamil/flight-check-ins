@@ -9,7 +9,7 @@ import './Seat.css'
 export class Seat extends React.Component {
   state = {
     popoverOpen: false,
-    id: this.props.seat.id,
+    // id: this.props.seat.id,
   }
 
   toggle = (event) => {
@@ -17,7 +17,7 @@ export class Seat extends React.Component {
   }
 
   bookSeat = () => {
-    const payload = { token: this.props.token, seat: this.state.id }
+    const payload = { token: this.props.token, seat: this.props.seat.id }
 
     this.props.onBookSeat(payload)
     this.setState({ popoverOpen: false })
